@@ -27,8 +27,8 @@ allowing to visualise the statistics on a gene- and ontology-basis.
     \tabular{ll}{
     Package: \tab GOexpress\cr
     Type: \tab Package\cr
-    Version: \tab 1.3.2\cr
-    Date: \tab 2014-06-22\cr
+    Version: \tab 1.7.1\cr
+    Date: \tab 2016-02-06\cr
     License: \tab  GPL (>= 3)\cr
     }
     This package requires only two input variables
@@ -36,7 +36,7 @@ allowing to visualise the statistics on a gene- and ontology-basis.
     \item An \code{ExpressionSet} containing assayData and phenoData.
     The former
     should be a gene-by-sample matrix providing gene expression values for
-    each gene in each sample. The latter should be an 
+    each gene in each sample. The latter should be an
     \code{AnnotatedDataFrame} from the \code{Biobase} package providing
     phenotypic information and grouping factors
     with two or more levels.
@@ -68,7 +68,7 @@ allowing to visualise the statistics on a gene- and ontology-basis.
 }
 
 \author{
-    Maintainer: Kevin Rue-Albrecht <\code{kevin.rue@ucdconnect.ie}>
+    Maintainer: Kevin Rue-Albrecht <\code{kevinrue67@gmail.com}>
 }
 
 \examples{
@@ -95,20 +95,20 @@ data(prefix2dataset)
 \seealso{
     Main method for an example usage:
     \code{\link[GOexpress:GO_analyse]{GO_analyse}}.
-    
+
     Packages
     \code{\link[Biobase]{Biobase}},
-    \code{\link[ggplot2]{ggplot2}},
     \code{\link[randomForest]{randomForest}},
     \code{\link[RColorBrewer]{RColorBrewer}},
     \code{\link[VennDiagram]{VennDiagram}}.
-    
+
     Methods
-    \code{\link[biomaRt:getBM]{getBM}},
-    \code{\link[gplots:heatmap.2]{heatmap.2}},
-    \code{\link[gplots:bluered]{bluered}},
-    \code{\link[gplots:greenred]{greenred}},
-    \code{\link[grid:grid.newpage]{grid.newpage}},
-    \code{\link[grid:grid.layout]{grid.layout}},
-    \code{\link[stringr:str_extract]{str_extract}}.
+    \code{\link[biomaRt:getBM]{biomaRt:getBM}},
+    \code{\link[ggplot2:ggplot]{ggplot2:ggplot}},
+    \code{\link[gplots:heatmap.2]{gplots:heatmap.2}},
+    \code{\link[gplots:bluered]{gplots:bluered}},
+    \code{\link[gplots:greenred]{gplots:greenred}},
+    \code{\link[grid:grid.newpage]{grid:grid.newpage}},
+    \code{\link[grid:grid.layout]{grid:grid.layout}},
+    \code{\link[stringr:str_extract]{stringr:str_extract}}.
 }
