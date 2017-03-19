@@ -1027,7 +1027,7 @@ pValue_GO = function(
     # Merge the p.val column with the GO table of the GO_analyse output
     GO.new <- merge(
         x = result$GO, y = real.go,
-        by = 'go_id', all.x = T, sort = F)
+        by = 'go_id', all.x = TRUE, sort = FALSE)
     # Set the p-value to 1 for ontologies not annotated with any gene
     GO.new$p.val[!GO.new$go_id %in% unique(result$mapping$go_id)] <- 1
     # reorder columns

@@ -378,7 +378,7 @@ GO_analyse <- function(
     if (method %in% c("randomForest", "rf")){
         ## Similarly to the previous anova procedure (see below)
         # Run the randomForest algorithm
-        rf <- randomForest(
+        rf <- randomForest::randomForest(
             x=t(exprs(eSet)), y=pData(eSet)[,f], importance=TRUE,
             do.trace=do.trace, ntree=ntree, mtry=mtry,
             ...)
@@ -396,10 +396,11 @@ GO_analyse <- function(
                 X=exprs(eSet),
                 MARGIN=1,
                 FUN=function(x){
-                    oneway.test(
+                    stats::oneway.test(
                         formula=expr~group,
                         data = cbind(
-                            expr=x, group=pData(eSet)[,f]
+                            expr=x,
+                            group=pData(eSet)[,f]
                             )
                         )$statistic
                     }

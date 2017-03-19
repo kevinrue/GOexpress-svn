@@ -1,11 +1,24 @@
 # Package required for the features of GOexpress to work
-import(Biobase)
-import(biomaRt)
-import(ggplot2)
-import(grid)
-import(RColorBrewer)
-import(graphics)
-import(stats)
+import("Biobase")
+import("biomaRt")
+import("ggplot2")
+import("grid")
+import("RColorBrewer")
+import("graphics")
+import("stats")
+import("methods")
+
+import("GO.db")
+
+importFrom(
+    "randomForest",
+    "randomForest", "importance"
+)
+
+importFrom(
+    "broom",
+    "tidy"
+)
 
 #importFrom(
 #    "graphics",
@@ -25,11 +38,6 @@ importFrom(
 importFrom(
     "stringr",
     "str_extract"
-)
-
-importFrom(
-    "randomForest",
-    "randomForest", "importance"
 )
 
 importFrom(
