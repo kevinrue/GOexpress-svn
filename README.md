@@ -3,6 +3,17 @@ GOexpress
 
 Visualise microarray and RNAseq data with gene ontology annotations.
 
+# Software status
+
+| Platforms |  OS  | R CMD check | Coverage<sup>1</sup> | 
+|:----------------:|:----------------:|:----------------:|:----------------:|
+| Travis CI<sup>2</sup> | Linux | [![Travis-CI Build Status](https://travis-ci.org/kevinrue/GOexpress.svg?branch=master)](https://travis-ci.org/kevinrue/GOexpress) | [![Coverage Status](https://img.shields.io/codecov/c/github/kevinrue/GOexpress/master.svg)](https://codecov.io/gh/kevinrue/GOexpress) |
+| Bioc _devel_ ([3.5](http://bioconductor.org/packages/3.5/bioc/html/GOexpress.html)) | Multiple | [![BioC-devel Build Status](http://bioconductor.org/shields/build/devel/bioc/GOexpress.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/GOexpress) | [![BioC-devel Coverage status](http://bioconductor.org/shields/coverage/devel/GOexpress.svg)](http://bioconductor.org/developers/how-to/unitTesting-guidelines/#coverage) |
+| Bioc _release_ ([3.4](http://bioconductor.org/packages/release/bioc/html/TVTB.html)) | Multiple | [![BioC-release Build Status](http://bioconductor.org/shields/build/release/bioc/GOexpress.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/GOexpress) | [![BioC-release Coverage status](http://bioconductor.org/shields/coverage/release/GOexpress.svg)](http://bioconductor.org/developers/how-to/unitTesting-guidelines/#coverage) |
+
+<sup>1</sup>Latest _successful_ build;
+<sup>2</sup>Bleeding edge original GitHub [repository](https://github.com/kevinrue/GOexpress).
+
 # OVERVIEW
 
 This package was designed for the analysis of bioinformatics
