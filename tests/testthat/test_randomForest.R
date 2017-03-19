@@ -13,9 +13,9 @@ eset <- ExpressionSet(
 
 test_that("simple usage",{
 
-    expect_s4_class(
-        oneway.test(eset, "Time"),
-        "multiHtest"
+    expect_s3_class(
+        randomForest(eset, "Treatment"),
+        "randomForest"
     )
 
 })
