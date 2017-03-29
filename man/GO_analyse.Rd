@@ -230,8 +230,16 @@ One-way ANOVA does not have additional arguments.
 }
 
 \examples{
-# Load example data subset
-data(AlvMac)
+exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
+pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
+
+exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
+pdataCSV <- read.csv(pdataFile, row.names = 1)
+eset <- ExpressionSet(
+    exprsCSV,
+    AnnotatedDataFrame(pdataCSV)
+)
+
 # Load a local copy of annotations obtained from the Ensembl Biomart server
 data(AlvMac_GOgenes)
 data(AlvMac_allgenes)
@@ -253,8 +261,6 @@ data(prefix2dataset)
 data(microarray2dataset)
 
 \dontrun{
-# Other valid but time-consuming examples:
-
 # Run the analysis on factor "Treatment" including all samples
 GO_analyse(eSet=AlvMac, f="Treatment")
 
