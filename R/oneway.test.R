@@ -34,7 +34,7 @@ setMethod(
         X = exprs(x),
         MARGIN = 1,
         FUN = function(geneExprs){
-            suppressMessages(tidy(stats::oneway.test(
+            suppressMessages(broom::tidy(stats::oneway.test(
                 formula = expr~group,
                 data = cbind(
                     expr = geneExprs,

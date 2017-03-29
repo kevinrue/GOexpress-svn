@@ -1,3 +1,7 @@
+microarray2dataset <- readRDS(system.file(
+    "internals", "microarray2dataset.rds", package = "GOexpress"))
+prefix2dataset <- readRDS(system.file(
+    "internals", "prefix2dataset.rds", package = "GOexpress"))
 
 GO_analyse <- function(
     eSet, f, subset=NULL, biomart_name = "ENSEMBL_MART_ENSEMBL",
@@ -103,10 +107,7 @@ GO_analyse <- function(
             else{
                 # check if it exists
                 if (!microarray %in% microarray2dataset.clean$microarray){
-                    stop(
-                        "Invalid microarray value. ",
-                        "See data(microarray2dataset)"
-                        )
+                    stop("Invalid microarray value.")
                 }
                 # if it is unique to a dataset (some microarray have the same
                 # column name
@@ -132,10 +133,7 @@ GO_analyse <- function(
                     sum(
                         microarray2dataset.clean$microarray == microarray
                         ) == 0){
-                    stop(
-                        "Microarray name not recognised. ",
-                        "See data(microarray2dataset)."
-                        )
+                    stop("Microarray name not recognised.")
                 }
                 # if the microarray name exists in multiple datasets
                 else{
@@ -156,10 +154,7 @@ GO_analyse <- function(
         else{
             # Check that it exists
             if (!biomart_dataset %in% prefix2dataset$dataset){
-                stop(
-                    "Invalid biomart_dataset value. ",
-                    "See data(prefix2dataset)"
-                    )
+                stop("Invalid biomart_dataset value.")
             }
             cat("Using biomart dataset", biomart_dataset, fill=TRUE)
             # if the user did not give a microarray name

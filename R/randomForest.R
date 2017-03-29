@@ -1,16 +1,16 @@
 setMethod(
     "randomForest", c("ExpressionSet", "factor"),
-    function(x, pheno){
+    function(x, pheno, ..., do.trace = TRUE){
         stopifnot(length(pheno) == nrow(x))
-        .randomForest(x, pheno)
+        .randomForest(x, pheno, ..., do.trace = TRUE)
     }
 )
 
 setMethod(
     "randomForest", c("ExpressionSet", "character"),
-    function(x, pheno){
+    function(x, pheno, ..., do.trace = TRUE){
         stopifnot(pheno %in% colnames(pData(x)))
-        .randomForest(x, pData(x)[,pheno])
+        .randomForest(x, pData(x)[,pheno], ..., do.trace = TRUE)
     }
 )
 

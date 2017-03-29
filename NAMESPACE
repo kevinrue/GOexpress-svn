@@ -53,6 +53,12 @@ importFrom(
 
 #export("^[[:alpha:]]+")
 
+# GOexpress"2"
+export("randomForest")
+export("oneway.test")
+
+# GOexpress"1"
+
 # Functions available to the user (API)
 export("cluster_GO")
 export("expression_plot")

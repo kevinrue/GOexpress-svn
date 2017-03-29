@@ -967,18 +967,18 @@ pValue_GO = function(
         rownames(random.genes) <- sample(
             x = rownames(random.genes),
             size = nrow(random.genes),
-            replace = F) # replace = F is default, but let's be clear
+            replace = FALSE) # replace = F is default, but let's be clear
         # Merge the randomised genes with the table of ontologies
         random.genes2GO <- merge(
             x = random.genes, y = result[['mapping']],
             by.x = 'row.names', by.y = 'gene_id',
-            all.y = T, sort = F)
+            all.y = TRUE, sort = FALSE)
         # compute the new average rank/score
         if(ranked.by == 'Rank'){
             # Replace NAs (annotated genes without expression data)
             # by max rank + 1
             random.genes2GO$Rank[is.na(random.genes2GO$Rank)] <-
-                max(random.genes2GO$Rank, na.rm = T) + 1
+                max(random.genes2GO$Rank, na.rm = TRUE) + 1
             # Calculate the randomised average rank
             random.aveRank <- aggregate(
                 Rank ~ go_id, data = random.genes2GO, FUN = FUN.GO
@@ -988,8 +988,8 @@ pValue_GO = function(
             # these will be given p-value of 1 later)
             compare.aveRanks <- merge(
                 x = real.go, y = random.aveRank,
-                by = 'go_id', sort = F,
-                all = F) # all=F is default, but let's be clear
+                by = 'go_id', sort = FALSE,
+                all = FALSE) # all=F is default, but let's be clear
             # get the list of genes where random is better than real
             worst.GO <- compare.aveRanks$go_id[
                 compare.aveRanks$Rank <= compare.aveRanks$ave_rank
@@ -1009,8 +1009,8 @@ pValue_GO = function(
             # these will be given p-value of 1 later)
             compare.aveScore <- merge(
                 x = real.go, y = random.aveScore,
-                by = 'go_id', sort = F,
-                all = F) # all=F is default, but let's be clear
+                by = 'go_id', sort = FALSE,
+                all = FALSE) # all=F is default, but let's be clear
             # get the list of ontologies where random is better than real
             worst.GO <- compare.aveScore$go_id[
                 compare.aveScore$Score <= random.aveScore$ave_score
