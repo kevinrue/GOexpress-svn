@@ -60,6 +60,7 @@ export("p.adjust")
 export("listMethods")
 export("head")
 export("tail")
+export("GOMap")
 
 # GOexpress"1"
 

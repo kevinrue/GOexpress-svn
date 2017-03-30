@@ -1,7 +1,7 @@
-\name{Bt.logCPM}
+\name{Bt.ESet.ex}
 
 \alias{Bt.logCPM}
-\alias{BtPheno}
+\alias{Bt.pheno}
 
 \docType{data}
 
@@ -18,7 +18,7 @@ bovine macrophages with different mycobacterial strains.
 
 \usage{
 data(Bt.logCPM)
-data(BtPheno)
+data(Bt.pheno)
 }
 
 \value{
@@ -72,12 +72,17 @@ DOI: 10.1186/1471-2164-14-230
 \examples{
 # Load the data
 data(Bt.logCPM)
+data(Bt.pheno)
 
-# Dimensions (rows, columns) of the data
+# Dimensions (rows, columns)
 dim(Bt.logCPM)
+dim(Bt.pheno)
 
 # Subset of first 5 features and 5 samples
 Bt.logCPM[1:5, 1:5]
+
+# Combine into an ExpressionSet
+Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 }
 
 \keyword{datasets}

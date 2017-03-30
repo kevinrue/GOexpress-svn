@@ -28,9 +28,17 @@ multiHtest <- setClass(
 .valid.GOInfo <- function(object){
     errors <- c()
 
-    if (FALSE){
-        errors <- c(
-            errors, "error message")
+    if (nrow(object@table) == 0){
+        msg <- "The mapping data.frame must include at least one row"
+        errors <- c(errors, msg)
+    }
+
+    if (ncol(object@table) != 2){
+        msg <- sprintf(
+            "The mapping data.frame must include exactly 2 columns: %i",
+            ncol(object@table)
+        )
+        errors <- c(errors, msg)
     }
 
     if (length(errors > 0)){
@@ -40,21 +48,16 @@ multiHtest <- setClass(
     return (TRUE)
 }
 
-GOInfo <- setClass(
-    "GOInfo",
+GOMap <- setClass(
+    "GOMap",
 
     slots = list(
-        # data.frame, EnsDb
-        # class(source) defines how to handle it
-        source = "character",
-        # NA_character, packageVersion(source)
-        # Raise warning if version is different from installed one
-        version = "character"
+        table = "data.frame",
+        source = "character"
     ),
 
     prototype = list(
-        source = "GO.db",
-        version = as.character(packageVersion("GO.db"))
+        source = NA_character_
     ),
 
     validity = .valid.GOInfo
