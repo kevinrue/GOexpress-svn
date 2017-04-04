@@ -6,7 +6,8 @@ setMethod(
         cat("Class: multiHtest\n")
         cat("@table:\n")
         print(head(object@table))
-        cat(sprintf("%i more rows...\n", nrow(object@table) - 6))
+        if (nrow(object@table) > 6)
+            cat(sprintf("%i more rows...\n", nrow(object@table) - 6))
         cat("\n")
         cat(sprintf("@method: %s", object@method))
         return(NULL)
@@ -21,10 +22,30 @@ setMethod(
         cat("Class: GOMap\n")
         cat("@table:\n")
         print(head(object@table))
-        cat(sprintf("%i more rows...\n", nrow(object@table) - 6))
+        if (nrow(object@table) > 6)
+            cat(sprintf("%i more rows...\n", nrow(object@table) - 6))
         cat("\n")
         cat(sprintf("source:\n- %s", paste(object@source, collapse = "\n- ")))
         # cat(sprintf("@source:\n- %s", object@source))
+        return(NULL)
+    }
+)
+
+# GOSummarisedRank ----
+
+setMethod(
+    "show", "GOSummarisedRank",
+    function(object){
+        cat("Class: GOSummarisedRank\n")
+        cat("@table:\n")
+        print(head(object@table))
+        if (nrow(object@table) > 6)
+            cat(sprintf("%i more rows...\n", nrow(object@table) - 6))
+        cat("\n")
+        om <- object@metric
+        cat(sprintf("@metric: %s [%s]", om[1], om[2]))
+        cat("\n")
+        cat("Other slots: @featureData, @GOMap")
         return(NULL)
     }
 )

@@ -18,3 +18,9 @@ setGeneric(
     function(x, method = p.adjust.methods, ...)
         standardGeneric("p.adjust")
 )
+
+setGeneric(
+    "GOrank", signature = c("x", "map"),
+    function(x, map, ...)
+        standardGeneric("GOrank")
+)

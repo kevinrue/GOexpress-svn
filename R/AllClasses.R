@@ -25,7 +25,7 @@ multiHtest <- setClass(
     validity = .valid.multiHtest
 )
 
-.valid.GOInfo <- function(object){
+.valid.GOMap <- function(object){
     errors <- c()
 
     if (nrow(object@table) == 0){
@@ -60,5 +60,47 @@ GOMap <- setClass(
         source = NA_character_
     ),
 
-    validity = .valid.GOInfo
+    validity = .valid.GOMap
+)
+
+.valid.GOSummarisedRank <- function(object){
+    errors <- c()
+
+    if (any(colnames(object@table) != c('rank','n','d'))){
+        msg <- 'Invalid colnames(object@table)'
+        errors <- c(errors, msg)
+    }
+
+    if (any(colnames(object@featureData) != c('metric','rank'))){
+        msg <- 'Invalid colnames(object@featureData)'
+        errors <- c(errors, msg)
+    }
+
+    if (length(object@metric) != 2){
+        msg <- sprintf(
+            "object@metric must be a character vector of length 2: %i",
+            length(object@metric)
+        )
+        errors <- c(errors, msg)
+    }
+
+    if (length(errors > 0)){
+        return(errors)
+    }
+
+    return (TRUE)
+}
+
+GOSummarisedRank <- setClass(
+    "GOSummarisedRank",
+
+    slots = list(
+        table = 'data.frame',
+        metric = 'character',
+        # FUN = 'function',
+        GOMap = 'GOMap',
+        featureData = 'data.frame'
+    ),
+
+    validity = .valid.GOSummarisedRank
 )

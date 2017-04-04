@@ -9,6 +9,7 @@
 \alias{GOMap}
 \alias{GOMap-methods}
 \alias{initialize,GOMap-method}
+\alias{nrow,GOMap-method}
 
 % Accessor methods:
 
@@ -31,6 +32,9 @@ In the following code snippets \code{x} is a \code{GOMap} object.
     \item{\code{table(x)}, \code{table(x) <- value}}{
     Gets or sets the \code{data.frame} that maps Gene Ontology categories
     to arbitrary features.
+    }
+    \item{\code{nrow(x)}}{
+    Number of annotations between Gene Ontology categories and features.
     }
 }
 }
@@ -69,9 +73,9 @@ Kevin Rue-Albrecht
 
 df <- data.frame(paste0("GO:000", 1:9), sample(LETTERS[1:2], 9, TRUE))
 
-GOMap <- GOMap(df, "dummy")
-
+gm <- GOMap(df, "dummy")
 
 # Accessors ----
 
+nrow(gm)
 }

@@ -61,6 +61,7 @@ export("listMethods")
 export("head")
 export("tail")
 export("GOMap")
+export("GOrank")
 
 # GOexpress"1"
 

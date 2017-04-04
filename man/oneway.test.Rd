@@ -1,5 +1,6 @@
 \name{oneway.test-methods}
 
+\alias{multiHtest-class}
 \alias{oneway.test}
 \alias{oneway.test,ExpressionSet,factor-method}
 \alias{oneway.test,ExpressionSet,character-method}
@@ -47,7 +48,8 @@ drive the supervised learning.
 }
 
 \value{
-Output of the \link[stats:oneway.test]{oneway.test} method post-processed
+A \code{multiHtest} object that contains the output of
+\link[stats:oneway.test]{oneway.test} post-processed
 by the \link[broom:tidy]{tidy} method.
 }
 

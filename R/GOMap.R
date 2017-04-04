@@ -11,3 +11,13 @@ GOMap <- function(table, source = NA_character_){
     validObject(gm)
     return(gm)
 }
+
+# nrow ----
+
+setMethod(
+    "nrow", 'GOMap', function(x){
+        dd <- nrow(x@table)
+        names(dd) <- 'annotations'
+        return(dd)
+    }
+)
