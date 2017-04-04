@@ -2,9 +2,12 @@
 .valid.multiHtest <- function(object){
     errors <- c()
 
-    if (FALSE){
-        errors <- c(
-            errors, "error message")
+    if (length(object@pFactor) != 1){
+        msg <- sprintf(
+            "object@pFactor must be a character vector of length 1: %i",
+            length(object@pFactor)
+        )
+        errors <- c(errors, msg)
     }
 
     if (length(errors > 0)){
@@ -19,7 +22,8 @@ multiHtest <- setClass(
 
     slots = list(
         table = "data.frame",
-        method = "character"
+        method = "character",
+        pFactor = "character"
     ),
 
     validity = .valid.multiHtest
@@ -84,6 +88,14 @@ GOMap <- setClass(
         errors <- c(errors, msg)
     }
 
+    if (length(object@pFactor) != 1){
+        msg <- sprintf(
+            "object@pFactor must be a character vector of length 1: %i",
+            length(object@pFactor)
+        )
+        errors <- c(errors, msg)
+    }
+
     if (length(errors > 0)){
         return(errors)
     }
@@ -99,7 +111,8 @@ GOSummarisedRank <- setClass(
         metric = 'character',
         # FUN = 'function',
         GOMap = 'GOMap',
-        featureData = 'data.frame'
+        featureData = 'data.frame',
+        pFactor = 'character'
     ),
 
     validity = .valid.GOSummarisedRank

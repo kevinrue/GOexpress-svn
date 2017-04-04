@@ -10,6 +10,7 @@ setMethod(
         # Pass the named metric to the core function
         gor <- .GOrank(geneMetric, map, ...)
         gor@metric <- c(metric, 'multiHtest')
+        gor@pFactor <- x@pFactor
         return(gor)
     }
 )
@@ -25,6 +26,7 @@ setMethod(
         # Pass the named metric to the core function
         gor <- .GOrank(geneMetric, map, ...)
         gor@metric <- c(metric, 'randomForest')
+        gor@pFactor <- as.character(x$call$y)
         return(gor)
     }
 )
@@ -77,6 +79,12 @@ setMethod(
     # Order tables by (average) rank
     fdata <- fdata[order(fdata[,'rank']),]
     goTable <- goTable[order(goTable[,'rank']),]
-    gor <- GOSummarisedRank(goTable, rep(NA_character_, 2), map, fdata)
+    gor <- GOSummarisedRank(
+        godata = goTable,
+        metric = rep(NA_character_, 2),
+        map = map,
+        fdata = fdata,
+        pFactor = NA_character_
+    )
     return(gor)
 }

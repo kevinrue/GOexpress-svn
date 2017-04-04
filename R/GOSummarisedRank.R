@@ -1,7 +1,7 @@
 
 # Constructor ----
 
-GOSummarisedRank <- function(godata, metric, map, fdata){
+GOSummarisedRank <- function(godata, metric, map, fdata, pFactor){
     colnames(godata) <- c('rank', 'n', 'd')
     colnames(fdata) <- c("metric", "rank")
     gsr <- new(
@@ -9,7 +9,8 @@ GOSummarisedRank <- function(godata, metric, map, fdata){
         table = godata,
         metric = metric,
         GOMap = map,
-        featureData = fdata
+        featureData = fdata,
+        pFactor = pFactor
     )
     validObject(gsr)
     return(gsr)

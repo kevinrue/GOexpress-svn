@@ -1,23 +1,16 @@
-setMethod(
-    "oneway.test", c("ExpressionSet", "factor"),
-    function(x, pheno, ...){
-        stopifnot(length(pheno) == nrow(x))
-        .oneway.test(x, pheno, ...)
-    }
-)
 
 setMethod(
     "oneway.test", c("ExpressionSet", "character"),
     function(x, pheno, ...){
         stopifnot(pheno %in% colnames(pData(x)))
-        .oneway.test(x, pData(x)[,pheno], ...)
+        .oneway.test(x, pData(x)[,pheno], ..., pFactor = pheno)
     }
 )
 
 # Default method
 # x: ExpressionSet
 # pdata: factor (length(pdata) == nrow(x))
-.oneway.test <- function(x, pheno, ...){
+.oneway.test <- function(x, pheno, ..., pFactor = NULL){
     stopifnot(is.factor(pheno))
 
     tablePheno <- table(pheno)
@@ -47,7 +40,11 @@ setMethod(
     resMethod <- as.character(resTable[1, "method"])
     resTable[, "method"] <- NULL
 
-    res <- multiHtest(table = resTable, method = resMethod)
+    res <- multiHtest(
+        table = resTable,
+        method = resMethod,
+        pFactor = pFactor
+    )
 
     return(res)
 }

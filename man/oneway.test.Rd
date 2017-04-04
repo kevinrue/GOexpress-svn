@@ -2,7 +2,6 @@
 
 \alias{multiHtest-class}
 \alias{oneway.test}
-\alias{oneway.test,ExpressionSet,factor-method}
 \alias{oneway.test,ExpressionSet,character-method}
 
 \title{
@@ -17,8 +16,6 @@ drive the supervised learning.
 }
 
 \usage{
-    \S4method{oneway.test}{ExpressionSet,factor}(
-        x, pheno, ...)
     \S4method{oneway.test}{ExpressionSet,character}(
         x, pheno, ...)
 }
@@ -37,8 +34,7 @@ drive the supervised learning.
     statistical tests and visualisation methods.
     }
     \item{pheno}{
-    Either the name of a column in the \code{phenoData} slot,
-    or a \code{factor} vector of length equal to the number of samples
+    The name of a column in the \code{phenoData} slot;
     used as the grouping factor for the analysis.
     }
     \item{\dots}{

@@ -9,7 +9,8 @@ setMethod(
         if (nrow(object@table) > 6)
             cat(sprintf("%i more rows...\n", nrow(object@table) - 6))
         cat("\n")
-        cat(sprintf("@method: %s", object@method))
+        cat(sprintf("@method: %s\n", object@method))
+        cat(sprintf("@pFactor: %s", object@pFactor))
         return(NULL)
     }
 )
@@ -43,8 +44,8 @@ setMethod(
             cat(sprintf("%i more rows...\n", nrow(object@table) - 6))
         cat("\n")
         om <- object@metric
-        cat(sprintf("@metric: %s [%s]", om[1], om[2]))
-        cat("\n")
+        cat(sprintf("@metric: %s [%s]\n", om[1], om[2]))
+        cat(sprintf("@pFactor: %s\n", object@pFactor))
         cat("Other slots: @featureData, @GOMap")
         return(NULL)
     }
