@@ -6,17 +6,33 @@ setMethod(
         metric <- 'statistic'
         # Get the metric
         geneMetric <- x@table[,metric]
-        # Get the rank of each gene according to the F statistic
         names(geneMetric) <- rownames(x@table)
-        # Pass the named ranks to the core function
+        # Pass the named metric to the core function
         gor <- .GOrank(geneMetric, map, ...)
         gor@metric <- c(metric, 'multiHtest')
         return(gor)
     }
 )
 
+# randomForest ----
+
+setMethod(
+    "GOrank", c("randomForest", "GOMap"), function(x, map, ...){
+        metric <- 'MeanDecreaseGini'
+        # Get the metric
+        geneMetric <- randomForest::importance(x)[,"MeanDecreaseGini"]
+        names(geneMetric) <- rownames(randomForest::importance(x))
+        # Pass the named metric to the core function
+        gor <- .GOrank(geneMetric, map, ...)
+        gor@metric <- c(metric, 'randomForest')
+        return(gor)
+    }
+)
+
+# Main ----
 
 .GOrank <- function(geneMetric, map, ...){
+    # NOTE: rank by _decreasing_ metric
     message("TODO: count of features not found in GOMap")
     message("TODO: count of GO categories without genes in data set")
     # List of unique features in annotations

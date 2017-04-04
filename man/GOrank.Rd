@@ -2,6 +2,7 @@
 
 \alias{GOrank}
 \alias{GOrank,multiHtest,GOMap-method}
+\alias{GOrank,randomForest,GOMap-method}
 
 \title{
 Average rank of features associated with GO categories
@@ -14,11 +15,14 @@ associated features.
 
 \usage{
     \S4method{GOrank}{multiHtest,GOMap}(x, map, ...)
+    \S4method{GOrank}{randomForest,GOMap}(x, map, ...)
 }
 
 \arguments{
     \item{x}{
-    Object of one of any supported classes: \code{\linkS4class{multiHtest}}.
+    Object of one of any supported classes:
+    \code{\linkS4class{multiHtest}},
+    \code{\link[randomForest:randomForest]{randomForest}}.
     }
     \item{map}{
     \code{GOMap} object.
@@ -49,6 +53,7 @@ of each Gene Ontology category.
 
 \seealso{
     \code{\link[GOexpress:oneway.test]{oneway.test}},
+    \code{\link[randomForest:randomForest]{randomForest}},
     \code{\link[GOexpress:GOSummarisedRank]{GOSummarisedRank}}.
 }
 
