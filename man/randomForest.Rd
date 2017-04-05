@@ -16,9 +16,9 @@ drive the supervised learning.
 
 \usage{
     \S4method{randomForest}{ExpressionSet,factor}(
-        x, pheno, ..., do.trace = TRUE)
+        x, pheno, ..., do.trace = 100)
     \S4method{randomForest}{ExpressionSet,character}(
-        x, pheno, ..., do.trace = TRUE)
+        x, pheno, ..., do.trace = 100)
 }
 
 \arguments{

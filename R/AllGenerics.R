@@ -1,7 +1,7 @@
 setGeneric(
     "randomForest",
     signature = c("x", "pheno"),
-    function(x, pheno, ..., do.trace = TRUE)
+    function(x, pheno, ..., do.trace = 100)
         standardGeneric("randomForest")
 )
 

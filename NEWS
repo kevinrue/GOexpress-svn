@@ -1,3 +1,13 @@
+CHANGES IN VERSION 1.99.1
+--------------------------
+
+GENERAL UPDATES:
+
+    o S4 classes and methods implemented to replace earlier functions.
+
+    o overlap_GO function dropped due to issues in the VennDiagram package
+    dependency.
+
 CHANGES IN VERSION 1.9.1
 --------------------------
 
@@ -12,7 +22,7 @@ GENERAL UPDATES:
 CHANGES IN VERSION 1.7.1
 --------------------------
 
-GENERAL UPDATES:
+GENERAL UPDATES:1
 
     o Updated email address.
 

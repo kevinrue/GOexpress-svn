@@ -1,3 +1,5 @@
+# nocov start
+# multiHtest ----
 
 .valid.multiHtest <- function(object){
     errors <- c()
@@ -28,6 +30,8 @@ multiHtest <- setClass(
 
     validity = .valid.multiHtest
 )
+
+# GOMap ----
 
 .valid.GOMap <- function(object){
     errors <- c()
@@ -66,6 +70,8 @@ GOMap <- setClass(
 
     validity = .valid.GOMap
 )
+
+# GOSummarisedRank ----
 
 .valid.GOSummarisedRank <- function(object){
     errors <- c()
@@ -117,3 +123,4 @@ GOSummarisedRank <- setClass(
 
     validity = .valid.GOSummarisedRank
 )
+# nocov end

@@ -1,23 +1,18 @@
 setMethod(
-    "randomForest", c("ExpressionSet", "factor"),
-    function(x, pheno, ..., do.trace = TRUE){
-        stopifnot(length(pheno) == nrow(x))
-        .randomForest(x, pheno, ..., do.trace = TRUE)
-    }
-)
-
-setMethod(
     "randomForest", c("ExpressionSet", "character"),
-    function(x, pheno, ..., do.trace = TRUE){
+    function(x, pheno, ..., do.trace = 100){
         stopifnot(pheno %in% colnames(pData(x)))
-        .randomForest(x, pData(x)[,pheno], ..., do.trace = TRUE)
+        rf <- .randomForest(x, pData(x)[,pheno], ..., do.trace = do.trace)
+        rf$call$x <- substitute(x)
+        rf$call$y <- substitute(pheno)
+        return(rf)
     }
 )
 
 # Default method
 # x: ExpressionSet
 # pdata: factor (length(pdata) == nrow(x))
-.randomForest <- function(x, pheno, ..., do.trace = TRUE){
+.randomForest <- function(x, pheno, ..., do.trace = 100){
     stopifnot(nrow(x) >= 4)
     stopifnot(is.factor(pheno))
 
@@ -32,6 +27,6 @@ setMethod(
     message("")
 
     return(randomForest::randomForest(
-        t(exprs(x)), y = pheno, importance=TRUE, ...
+        t(exprs(x)), y = pheno, importance = TRUE, do.trace = do.trace, ...
     ))
 }

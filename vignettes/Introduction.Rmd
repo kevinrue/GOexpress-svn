@@ -1,0 +1,360 @@
+---
+title: "GOexpress: identify and visualise robust gene ontology signatures
+    through supervised classification of gene expression data"
+author:
+    -   name: Kévin C. Rue-Albrecht
+        email: kevinrue67@gmail.com
+        affiliation:
+            -   University College Dublin
+            -   University of Oxford
+    -   name: Paul A. McGettigan
+        affiliation: University College Dublin
+    -   name: Belinda Hernández
+        affiliation: University College Dublin
+    -   name: David A. Magee
+        affiliation: University College Dublin
+    -   name: Nicolas C. Nalpas
+        affiliation: University College Dublin
+    -   name: Andrew C. Parnell
+        affiliation: University College Dublin
+    -   name: Stephen V. Gordon
+        affiliation: University College Dublin
+    -   name: David E. MacHugh
+        affiliation: University College Dublin
+package: GOexpress
+output: BiocStyle::html_document2
+abstract: |
+    Introduction to the concepts implemented in the package.
+vignette: |
+    %\VignetteIndexEntry{Introduction}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+bibliography:
+    bibliography.bib
+---
+
+```{r GOexpress, include=FALSE}
+stopifnot(require('GOexpress'))
+```
+
+# Introduction
+
+## The origin and purpose of GOexpress
+
+`r Biocpkg("GOexpress")` emerged from a set of plotting
+functions regularly copied and pasted across various complex multifactorial
+transcriptomics studies from both microarray and RNA-seq platforms.
+Those functions were repeatedly used to:
+
+* visualise and compare the expression profile of genes
+    across multiple groups of samples
+* annotate technical gene identifiers from both microarray and RNA-seq
+    platforms (*i.e.*, probesets, Ensembl gene identifiers)
+    with their associated gene name,
+* evaluate the classification of samples based on genes participating
+    in a common cellular function or location (*i.e.*, gene ontology).
+    
+While developing `r Biocpkg("GOexpress")` and discussing its features with
+colleagues and potential users, a few more features were added,
+to enhance and complement the initial functions,
+leading to the present version of the package.
+
+## Purpose of this document
+
+This User’s Guide was intended as a helpful description of the main features
+implemented in `r Biocpkg("GOexpress")`, as well as a tutorial taking the user
+through a typical analysis pipeline that `r Biocpkg("GOexpress")` was designed
+for.
+While an example usage will be provided for each function of the package,
+the many arguments of each function cannot realistically be demonstrated in
+this Guide, and we kindly ask users to also read the individual help pages
+accompanying the corresponding package functions for further details.
+
+## Versions 2.x.x
+
+Recently, `r Biocpkg("GOexpress")` has undergone important *structural*
+changes to introduce S4 classes and methods.
+Crucially, every effort has been made to preserve the underlying algorithms
+and functionalities, and minimise disruption of the user experience.
+Ultimately, those changes are intended to facilitate the user experience,
+and widen the range of data types supported.
+
+Among the most notable changes:
+
+* The `GO_analyse` function implemented in versions `<=1.x.x` is now split
+    into smaller S4 methods with specific signatures and output classes.
+    * `GOexpress::oneway.test` replaces `GO_analyse(...,method='anova)`'
+    * `GOexpress::randomForest` replaces `GO_analyse(...,method='randomForest')`
+    * `GOrank` replaces the portion of `GO_analyse` that used to summarise
+        features annotated to GO categories.
+* Semi-automated support for the Ensembl BioMart was removed. Users
+    are encouraged to query annotations directly
+    (*e.g.*, `r Biocpkg("biomaRt")`).
+    * However, the `GOMap` class was introduced to help users store annotations
+        and track information about their source.
+        Note that the `GOMap` class may be used to store *any* kind of
+        bidirectional annotations between features and categories
+        that users wish to use
+        (*e.g.*, protein, miRNA, KEGG pathways, ...)
+
+# Before you start
+
+## Installation
+
+Installing GOexpress should be as easy as running the two lines below:
+
+```{r biocLite, eval=FALSE}
+source("http://bioconductor.org/biocLite.R")
+biocLite("GOexpress")
+```
+
+## Getting help
+
+Despite our efforts to repeatedly test the package on various data sets,
+many of the model species and gene expression platforms have
+not been tested yet. We welcome feedback!
+
+Interesting suggestions for additional package functions, or improvement of
+existing ones are most welcome and may be implemented as time allows.
+Alternatively, we also encourage users to fork the GitHub repository of the
+project, develop and test their own feature(s), and finally generate a pull
+request to integrate it to the original
+[repository](https://github.com/kevinrue/GOexpress).
+
+As for all \Bioconductor{} packages, the official
+[support site](http://www.bioconductor.org/help/support)
+is the best place to seek advice from a large and active community of
+users and developers.
+
+## Citing GOexpress
+
+If you use `r Biocpkg("GOexpress")` in your work, please cite the associated
+publication [@GOexpress2016]:
+
+```{r citation, results='asis', echo=FALSE}
+cat(citation('GOexpress')$textVersion)
+```
+
+# Input data
+
+## ExpressionSet
+
+`r Biocpkg("GOexpress")` requires an expression data matrix
+and phenotype information in `assayData` and `phenoData` of 
+a `r Biocpkg("Biobase")` `ExpressionSet`, for two main reasons:
+
+* built-in methods readily available to store, access, update, and process the
+    data set
+* interoperatibility with other packages that produce and
+    accept `ExpressionSet` objects
+
+The other slots of the `ExpressionSet` container may be left empty as
+`r Biocpkg("GOexpress")` does not currently access them.
+Instructions to create `AnnotatedDataFrame` and `ExpressionSet`
+objects are detailed in the vignettes of the `r Biocpkg("Biobase")` package.
+
+### Expression data matrix
+
+Despite their different underlying technologies, omics data sets
+typically yield a matrix measuring the expression level of
+numerous features in several samples.
+Commonly, this expression matrix is filtered to
+retain only genes qualified as *informative* (*e.g.*, above a detection level);
+and uninformative features are removed to limit the false discovery rate (FDR).
+`r Biocpkg("GOexpress")` uses the expression matrix supplied *as is*;
+therefore, users should ensure that adequate filtering and normalisation
+were applied before using dedicated packages (*e.g.*, `edgeR`, `DESeq2`).
+
+In this vignette, let us use a gene-by-sample matrix of normalised
+log[2]-transformed CPM from an *in vitro* stimulation of bovine macrophages with
+different mycobacterial strains:
+
+```{r Bt.logCPM, results='hold'}
+data("Bt.logCPM")
+class(Bt.logCPM); dim(Bt.logCPM)
+```
+
+### Phenotype information
+
+`r Biocpkg("GOexpress")` requires the expression data matrix
+to be accompanied by a `r Biocpkg("Biobase")` `AnnotatedDataFrame`
+that provides phenotype information for each sample
+(*e.g.*, treatment, time point):
+
+```{r Bt.pheno}
+data("Bt.pheno")
+summary(Bt.pheno)
+```
+
+To use `r Biocpkg("GOexpress")`, users should ensure
+that experimental factors and levels are correctly set (*e.g.*,
+drop unused levels).
+
+```{r droplevels}
+Bt.pheno <- droplevels(Bt.pheno)
+```
+
+## Experimental factor analysed
+
+The above `ExpressionSet` and the name of a column in its `phenoData` slot
+are the only two input variables required to start an analysis of the
+expressed features.
+
+In the sample data set, the next chunk of code reveals which columns store
+factors:
+
+```{r pDataClass}
+sapply(Bt.pheno, class)
+```
+
+## Functional annotations
+
+To summarise information associated with functionally
+related or similar groups of expressed features,
+`r Biocpkg("GOexpress")` allows the use of annotations such as the
+Gene Ontology (GO) (*i.e.*,
+*molecular function*, *biological process*, and *cellular component*).
+
+`r Biocpkg("GOexpress")` implements the `GOMap` class to store any type
+of bidirectional annotations between features and categories, along with
+some information about their origin:
+
+```{r Bt.GOMap, results='hold'}
+data("Bt.GOMap")
+Bt.GOMap
+```
+
+# Quick start
+
+## ExpressionSet
+
+A `matrix` of expression data and a `data.frame` of phenotype information
+may be combined into an `ExpressionSet` as follows:
+
+```{r ExpressionSet}
+Bt.eset <- ExpressionSet(
+    assayData = Bt.logCPM, phenoData = AnnotatedDataFrame(Bt.pheno)
+)
+```
+
+## Random Forest
+
+Here, we demonstrate the use of a random forest (RF) approach to estimate
+the capacity of each gene feature to classify samples subjected to different
+infections:
+
+```{r randomForest, results='hold'}
+rf <- randomForest(Bt.eset, 'Infection')
+```
+
+**Note**: this analysis considers the `Infection` factor *only*,
+irrespective of other experimental factors such as `Time` and `Animal`;
+to reach a high statistic, features must show a consistent difference between
+`Infection`, independently of other factors.
+Alternatively, a subset of samples from the input `ExpressionSet`
+may be supplied to address more specific hypotheses.
+
+The `GOexpres::randomForest` returns a list of class `randomForest`
+that benefits from all the methods implemented in the original package:
+
+```{r plotRandomForest}
+plot(rf)
+```
+
+# Notes
+
+## Importance of feature annotations
+
+During the summarisation of feature into categories, features present in
+the annotations but absent from the data set are considered to have
+no classification power, and ranked last.
+
+In data sets where uninformative features were filtered out prior to
+the analysis, this ensure that categories under-represented in the data set
+(*i.e.*, contain few informative features) are weighed down when considering
+the average rank of annotated features.
+Conversely, this prioritises categories that are over-represented in the data
+set (*i.e.*, contain mostly informative features).
+
+# Style macros
+
+_BiocStyle_ introduces the following macros for referring to _R_ packages:
+
+* `r Biocpkg("IRanges")`, for _Bioconductor_ software, annotation and experiment
+    data packages,
+* `r CRANpkg("data.table")`, for _R_ packages available on CRAN,
+* `r Githubpkg("rstudio/rmarkdown")`, for _R_ packages available on GitHub,
+* `r Rpackage("MyPkg")`, for _R_ packages that are _not_ available on
+    _Bioconductor_, CRAN or GitHub.
+
+
+# Figures
+
+Assign captions to figures in the code chunk option `fig.cap` to automatically
+number them, and to be able to reference them, see Figure \@ref(fig:plot).
+The figure label is generated from the code chunk label by prefixing it with
+`fig:`.
+
+```{r plot, fig.cap="Regular figure. The first sentence of the figure caption is automatically emphasized to serve as figure title.", echo=FALSE}
+plot(cars)
+```
+
+Small and wide figures can be specified by `fig.small` and `fig.wide` code
+chunk options.
+
+```{r small, fig.cap="Small figure. A plot produced by a code chunk with option `fig.small = TRUE`.", fig.small=TRUE, echo=FALSE}
+plot(cars)
+```
+
+```{r wide, fig.cap="Wide figure. A plot produced by a code chunk with option `fig.wide = TRUE`.", fig.wide=TRUE, echo=FALSE}
+plot(cars)
+```
+
+
+# Equations
+
+To number and reference equations, put them in equation environments and assign
+labels to them, see Equation \@ref(eq:binom).
+
+\begin{equation}
+    f\left(k\right) = \binom{n}{k} p^k\left(1-p\right)^{n-k}
+    (\#eq:binom)
+\end{equation}
+
+
+# Tables
+
+Like figures, tables with captions will also be numbered and can be referenced,
+see Table \@ref(tab:table).
+
+Fruit   | Price
+------- | -----
+bananas | 1.2
+apples  | 1.0
+oranges | 2.5
+
+: (\#tab:table) A simple table. With caption.
+
+
+# Cross-references
+
+Apart from referencing figures (Section \@ref(figures)), tables
+(Section \@ref(tables)), and equations (Section \@ref(equations)),
+you can also use the same syntax to refer to sections by their default labels
+generated by pandoc.
+
+
+# Side notes
+
+Footnotes are displayed as side notes on the right
+margin^[this is a side note entered as a footnote], which has the advantage
+that they appear close to the place where they are defined.
+
+
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+
+# References

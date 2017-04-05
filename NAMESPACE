@@ -1,14 +1,11 @@
 # Package required for the features of GOexpress to work
 import("Biobase")
-import("biomaRt")
-import("ggplot2")
-import("grid")
-import("RColorBrewer")
-import("graphics")
-import("stats")
 import("methods")
 
-import("GO.db")
+importFrom(
+    "stats",
+    "p.adjust.methods"
+)
 
 importFrom(
     "randomForest",
@@ -20,36 +17,15 @@ importFrom(
     "tidy"
 )
 
-#importFrom(
-#    "graphics",
-#    "hist", "par", "plot", "plot.design"
-#)
-
-#importFrom(
-#    "aggregate", "dist", "hclust", "oneway.test", "quantile"
-#    "stats",
-#)
-
+# GOexpress"1"
+importFrom(
+    "RColorBrewer",
+    "brewer.pal"
+)
 importFrom(
     "gplots",
-    "heatmap.2", "bluered", "greenred"
+    "bluered"
 )
-
-importFrom(
-    "stringr",
-    "str_extract"
-)
-
-importFrom(
-    "VennDiagram",
-    "venn.diagram"
-)
-
-importFrom(
-    "RCurl",
-    "getCurlHandle"
-)
-
 
 #export("^[[:alpha:]]+")
 
@@ -75,7 +51,6 @@ export("GO_analyse")
 export("heatmap_GO")
 export("hist_scores")
 export("list_genes")
-export("overlap_GO")
 export("plot_design")
 export("pValue_GO")
 export("quantiles_scores")

@@ -47,8 +47,8 @@ data(Bt.GOMap)
 # Display
 GOMap
 
-# Dimensions (rows, columns)
-dim(Bt.GOMap@table)
+# Count of annotations
+nrow(Bt.GOMap)
 }
 
 \keyword{datasets}

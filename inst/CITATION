@@ -1,0 +1,34 @@
+citEntry(
+    entry = "article",
+    title = paste(
+        "GOexpress: an R/Bioconductor package for the identification and",
+        "visualisation of robust gene ontology signatures through supervised",
+        "learning of gene expression data"
+    ),
+    author = c(
+        person(given="Kevin", family="Rue-Albrecht",
+        role = c("aut", "cre"), email = "kevinrue67@gmail.com"),
+        person(give=c("Tharvesh", "M.L."), family="Ali", role = c("ctb")),
+        person(given=c("Paul", "A."), family="McGettigan", role = c("ctb")),
+        person(given="Belinda", family="Hernandez", role = c("ctb")),
+        person(given="David A.", family="Magee", role = c("ctb")),
+        person(given="Nicolas C.", family="Nalpas", role = c("ctb")),
+        person(given="Andrew", family="Parnell", role = c("ctb")),
+        person(given=c("Stephen", "V."), family="Gordon", role = c("ths")),
+        person(given=c("David", "E."), family="MacHugh", role = c("ths"))
+    ),
+    year = 2016,
+    journal = "BMC Bioinformatics",
+    doi = "10.1186/s12859-016-0971-3",
+    volume = 17,
+    pages = 126,
+    ISSN = "1471-2105 (Electronic) 1471-2105 (Linking)",
+    url = "https://www.ncbi.nlm.nih.gov/pubmed/26968614",
+    textVersion = paste(
+        "Rue-Albrecht, K., P. A. McGettigan, B. Hernandez, N. C. Nalpas,",
+        "D. A. Magee, A. C. Parnell, S. V. Gordon and D. E. MacHugh (2016): ",
+        "GOexpress: an R/Bioconductor package for the identification and",
+        "visualisation of robust gene ontology signatures through supervised",
+        "learning of gene expression data. BMC Bioinformatics 17: 126."
+    )
+)
