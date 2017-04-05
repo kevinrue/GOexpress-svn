@@ -11,11 +11,22 @@ eset <- ExpressionSet(
 
 # Constructors ----
 
+rf <- randomForest(eset, "Treatment")
+
 test_that("simple usage",{
 
-    expect_s3_class(
-        randomForest(eset, "Treatment"),
-        "randomForest"
-    )
+    expect_s3_class(rf, "randomForest")
+
+})
+
+# GOrank ----
+
+gr <- GOrank(rf, Bt.GOMap)
+
+test_that("GOrank works on multiHtest objects",{
+
+    expect_s4_class(gr,"GOSummarisedRank")
+    expect_equal(gr@pFactor, "Treatment")
+    expect_equal(gr@metric, c("MeanDecreaseGini", "randomForest"))
 
 })

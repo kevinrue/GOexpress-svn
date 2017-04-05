@@ -9,19 +9,25 @@ df <- rbind(df, c('', ''))
 
 # Constructors ----
 
+gm <- GOMap(df, "dummy")
+
 test_that("Constructor produce a valid object",{
-    expect_s4_class(
-        GOMap(df, "dummy"), "GOMap"
-    )
+    expect_s4_class(gm, "GOMap")
+})
+
+# show(GOMap) ----
+
+test_that("show works on GOMap objects",{
+
+    expect_type(show(gm), "NULL")
+
 })
 
 # nrow ----
 
+nr <- nrow(gm)
+
 test_that("nrow works",{
-
-    gm <- GOMap(df, "dummy")
-
-    nr <- nrow(gm)
 
     expect_type(nr, 'integer')
     expect_length(nr, 1)

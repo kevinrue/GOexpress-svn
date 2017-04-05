@@ -11,11 +11,49 @@ eset <- ExpressionSet(
 
 # Constructors ----
 
-test_that("simple usage",{
+ow <- oneway.test(eset, "Treatment")
 
-    expect_s4_class(
-        oneway.test(eset, "Time"),
-        "multiHtest"
-    )
+test_that("oneway.test works",{
+
+    expect_s4_class(ow, "multiHtest")
+
+})
+
+# show(multiHtest) ----
+
+test_that("show works on multiHtest objects",{
+
+    expect_type(show(ow), "NULL")
+
+})
+
+# p.adjust ----
+
+pa <- p.adjust(ow)
+
+test_that("p.adjust works on multiHtest objects",{
+
+    expect_s4_class(pa,"multiHtest")
+    expect_equal(ncol(pa@table), ncol(ow@table) + 1)
+
+})
+
+# GOrank ----
+
+gr <- GOrank(ow, Bt.GOMap)
+
+test_that("GOrank works on multiHtest objects",{
+
+    expect_s4_class(gr,"GOSummarisedRank")
+    expect_equal(gr@pFactor, "Treatment")
+    expect_equal(gr@metric, c("statistic", "multiHtest"))
+
+})
+
+# show(GOSummarisedRank) ----
+
+test_that("show works on GOSummarisedRank objects",{
+
+    expect_type(show(gr), "NULL")
 
 })
