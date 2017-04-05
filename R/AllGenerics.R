@@ -24,3 +24,5 @@ setGeneric(
     function(x, map, ...)
         standardGeneric("GOrank")
 )
+
+setGeneric("nrow")
