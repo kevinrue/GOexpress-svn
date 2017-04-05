@@ -3,6 +3,7 @@
 setMethod(
     "tail", "multiHtest",
     function(x, n = 6L, ...){
-        return(tail(x@table, n, ...))
+        x@table <- tail(x@table, n, ...)
+        return(x)
     }
 )

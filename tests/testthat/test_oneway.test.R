@@ -27,6 +27,22 @@ test_that("show works on multiHtest objects",{
 
 })
 
+# head(multiHtest) ----
+
+test_that("head works on multiHtest objects",{
+
+    expect_s4_class(head(ow), "multiHtest")
+
+})
+
+# tail(multiHtest) ----
+
+test_that("tail works on multiHtest objects",{
+
+    expect_s4_class(tail(ow), "multiHtest")
+
+})
+
 # p.adjust ----
 
 pa <- p.adjust(ow)
