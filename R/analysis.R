@@ -4,6 +4,5 @@ GO_analyse <- function(
     method="randomForest", rank.by="rank", do.trace=100, ntree=1000,
     mtry=ceiling(2*sqrt(nrow(eSet))), GO_genes=NULL, all_GO=NULL,
     all_genes=NULL, FUN.GO=mean, ...){
-    .Deprecated('GOrank')
-    stop('New S4 method required')
+    .Defunct('GOrank')
 }
