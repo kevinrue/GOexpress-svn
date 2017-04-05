@@ -31,5 +31,5 @@ test_that("nrow works",{
 
     expect_type(nr, 'integer')
     expect_length(nr, 1)
-    expect_identical(names(nr), 'annotations')
+    expect_named(nr, 'annotations')
 })
