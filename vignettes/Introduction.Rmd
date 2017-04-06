@@ -83,8 +83,8 @@ Among the most notable changes:
 
 * The `GO_analyse` function implemented in versions `<=1.x.x` is now split
     into smaller S4 methods with specific signatures and output classes.
-    * `GOexpress::oneway.test` replaces `GO_analyse(...,method='anova)`'
-    * `GOexpress::randomForest` replaces `GO_analyse(...,method='randomForest')`
+    * `oneway.test` replaces `GO_analyse(...,method='anova)`'
+    * `randomForest` replaces `GO_analyse(...,method='randomForest')`
     * `GOrank` replaces the portion of `GO_analyse` that used to summarise
         features annotated to GO categories.
 * Semi-automated support for the Ensembl BioMart was removed. Users
@@ -254,7 +254,7 @@ to reach a high statistic, features must show a consistent difference between
 Alternatively, a subset of samples from the input `ExpressionSet`
 may be supplied to address more specific hypotheses.
 
-The `GOexpres::randomForest` returns a list of class `randomForest`
+The `randomForest` returns a list of class `randomForest`
 that benefits from all the methods implemented in the original package:
 
 ```{r plotRandomForest}
