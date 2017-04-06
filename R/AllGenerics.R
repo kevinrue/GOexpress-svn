@@ -26,3 +26,4 @@ setGeneric(
 )
 
 setGeneric("nrow")
+setGeneric("subset")

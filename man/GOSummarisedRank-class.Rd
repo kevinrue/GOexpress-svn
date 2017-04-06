@@ -37,7 +37,7 @@ data("Bt.GOMap")
 
 # Preprocessing ----
 
-ow <- oneway.test(eset, "Treatment")
+ow <- oneway.test(eset, "Infection")
 gr <- GOrank(ow, Bt.GOMap)
 
 # Examples ----

@@ -1,6 +1,5 @@
 \name{oneway.test-methods}
 
-\alias{multiHtest-class}
 \alias{oneway.test}
 \alias{oneway.test,ExpressionSet,character-method}
 
@@ -74,7 +73,7 @@ eset <- ExpressionSet(
 # Available phenoData columns
 names(pData(eset))
 
-ow <- oneway.test(eset, "Treatment")
+ow <- oneway.test(eset, "Infection")
 }
 
 \keyword{ GOexpress }

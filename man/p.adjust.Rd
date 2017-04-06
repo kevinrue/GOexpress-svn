@@ -60,7 +60,7 @@ eset <- ExpressionSet(
 # Available phenoData columns
 names(pData(eset))
 
-ow <- oneway.test(eset, "Treatment")
+ow <- oneway.test(eset, "Infection")
 ow <- p.adjust(ow)
 }
 

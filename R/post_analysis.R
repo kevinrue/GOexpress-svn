@@ -110,7 +110,7 @@ rerank <- function(result, rank.by = 'rank'){
 }
 
 subEset <- function(eSet, subset=list()){
-    .Defunct('New S4 method required')
+    .Defunct('subset')
 }
 
 subset_scores <- function(result, ...){

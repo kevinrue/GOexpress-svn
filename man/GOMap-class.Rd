@@ -9,11 +9,11 @@
 \alias{GOMap}
 \alias{GOMap-methods}
 \alias{initialize,GOMap-method}
-\alias{nrow,GOMap-method}
 
 % Accessor methods:
 
 % Other methods / functions
+\alias{nrow,GOMap-method}
 
 \title{GOMap class objects}
 
@@ -79,3 +79,6 @@ gm <- GOMap(df, "dummy")
 
 nrow(gm)
 }
+
+\keyword{ GOexpress }
+\keyword{ GOMap }

@@ -120,7 +120,7 @@ test_that("rerank is defunct",{
 
 test_that("subEset is defunct",{
 
-    expect_error(subEset(NULL), "New S4 method required")
+    expect_error(subEset(NULL), "is defunct")
 
 })
 

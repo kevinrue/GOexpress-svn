@@ -11,7 +11,7 @@ eset <- ExpressionSet(
 
 # Constructors ----
 
-ow <- oneway.test(eset, "Treatment")
+ow <- oneway.test(eset, "Infection")
 
 test_that("oneway.test works",{
 
@@ -61,7 +61,7 @@ gr <- GOrank(ow, Bt.GOMap)
 test_that("GOrank works on multiHtest objects",{
 
     expect_s4_class(gr,"GOSummarisedRank")
-    expect_equal(gr@pFactor, "Treatment")
+    expect_equal(gr@pFactor, "Infection")
     expect_equal(gr@metric, c("statistic", "multiHtest"))
 
 })

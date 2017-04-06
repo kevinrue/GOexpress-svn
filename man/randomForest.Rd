@@ -77,7 +77,7 @@ eset <- ExpressionSet(
 # Available phenoData columns
 names(pData(eset))
 
-rf <- randomForest(eset, "Treatment")
+rf <- randomForest(eset, "Infection")
 plot(rf)
 }
 

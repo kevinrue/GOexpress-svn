@@ -261,19 +261,33 @@ that benefits from all the methods implemented in the original package:
 plot(rf)
 ```
 
+# Advanced use
+## Subsetting ExpressionSet objects
+
+`r Biocpkg("GOexpress")` implements a `subset` S4 method for `ExpressionSet`
+objects. This method facilitates analyses of subsets of samples and features
+using logical expressions applied to the `phenoData` and `featureData` slots:
+
+```{r subset}
+fData(eset)[,'dummy'] <- sample(LETTERS, nrow(eset), TRUE)
+subEset <- subset(eset, pheno = (Time == '2H'), feature = (dummy < 'N'))
+dim(eset); dim(subEset)
+```
+
 # Notes
 
 ## Importance of feature annotations
 
-During the summarisation of feature into categories, features present in
-the annotations but absent from the data set are considered to have
-no classification power, and ranked last.
+During the summarisation of feature into categories, features that appear in
+the annotations but are *absent from the data set* are considered to have
+no classification power, and therefore ranked last (*i.e.*, count of features
+present in the data set plus one).
 
 In data sets where uninformative features were filtered out prior to
 the analysis, this ensure that categories under-represented in the data set
 (*i.e.*, contain few informative features) are weighed down when considering
 the average rank of annotated features.
-Conversely, this prioritises categories that are over-represented in the data
+Conversely, this prioritises categories that are well-represented in the data
 set (*i.e.*, contain mostly informative features).
 
 # Style macros
