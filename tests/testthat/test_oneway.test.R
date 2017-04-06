@@ -50,7 +50,7 @@ pa <- p.adjust(ow)
 test_that("p.adjust works on multiHtest objects",{
 
     expect_s4_class(pa,"multiHtest")
-    expect_equal(ncol(pa@table), ncol(ow@table) + 1)
+    expect_true('p.adjust' %in% colnames(pa@table))
 
 })
 

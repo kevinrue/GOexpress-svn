@@ -1,6 +1,3 @@
-
-showMethods('subset', classes = 'ExpressionSet', includeDefs = TRUE)
-
 exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
 pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
 

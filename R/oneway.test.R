@@ -1,16 +1,24 @@
 
 setMethod(
     "oneway.test", c("ExpressionSet", "character"),
-    function(x, pheno, ...){
+    function(x, pheno, ..., p.adjust = "BH"){
         stopifnot(pheno %in% colnames(pData(x)))
-        .oneway.test(x, pData(x)[,pheno], ..., pFactor = pheno)
+        .oneway.test(
+            x,
+            pData(x)[,pheno],
+            p.adjust,
+            pheno,
+            ...
+        )
     }
 )
 
 # Default method
 # x: ExpressionSet
 # pdata: factor (length(pdata) == nrow(x))
-.oneway.test <- function(x, pheno, ..., pFactor = NULL){
+# p.adjust: character (one of p.adjust.methods)
+# pFactor: column name in phenoData slot
+.oneway.test <- function(x, pheno, p.adjust, pFactor, ...){
     stopifnot(is.factor(pheno))
 
     tablePheno <- table(pheno)
@@ -45,6 +53,8 @@ setMethod(
         method = resMethod,
         pFactor = pFactor
     )
+
+    res <- p.adjust(res, p.adjust, ...)
 
     return(res)
 }

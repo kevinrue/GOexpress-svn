@@ -4,33 +4,23 @@
 \alias{oneway.test,ExpressionSet,character-method}
 
 \title{
-Wrapper around the \code{oneway.test} package for \code{ExpressionSet}.
+Test for Equal Means of Expression in a One-Way Layout
 }
 
 \description{
-Calls the \code{stats::oneway.test} method on each row of an
-\code{ExpressionSet},
-taking either a \code{factor} or the name of a \code{phenoData} field to
-drive the supervised learning.
+Calls the \code{\link[stats:oneway.test]{oneway.test}} method
+on each row of an \code{ExpressionSet},
+taking the name of a column in the \code{phenoData} slot as grouping factor.
 }
 
 \usage{
     \S4method{oneway.test}{ExpressionSet,character}(
-        x, pheno, ...)
+    x, pheno, ..., p.adjust = "BH")
 }
 
 \arguments{
     \item{x}{
-    \code{ExpressionSet} of the \code{Biobase} package including a
-    gene-by-sample expression matrix in the \code{assayData} slot, and a
-    phenotypic information data-frame in the \code{phenoData} slot.
-    In the expression \code{matrix},
-    row names are identifiers of expressed features,
-    and column names are identifiers of the individual samples.
-    In the phenotype \code{AnnotatedDataFrame},
-    row names are sample idenfifiers,
-    column names are grouping factors and phenotypes available for
-    statistical tests and visualisation methods.
+    An \code{\linkS4class{ExpressionSet}}.
     }
     \item{pheno}{
     The name of a column in the \code{phenoData} slot;
@@ -39,6 +29,9 @@ drive the supervised learning.
     \item{\dots}{
     Additional arguments passed on to the
     \link[stats:oneway.test]{oneway.test} method.
+    }
+    \item{p.adjust}{
+    correction method. Can be abbreviated.
     }
 }
 
@@ -53,7 +46,8 @@ by the \link[broom:tidy]{tidy} method.
 }
 
 \seealso{
-    \code{\link[stats:oneway.test]{oneway.test}}.
+    \code{\link[stats:oneway.test]{oneway.test}},
+    \code{\link[stats:p.adjust]{p.adjust}}.
 }
 
 \examples{

@@ -8,7 +8,7 @@ setGeneric(
 setGeneric(
     "oneway.test",
     signature = c("x", "pheno"),
-    function(x, pheno, ...)
+    function(x, pheno, ..., p.adjust = "BH")
         standardGeneric("oneway.test")
 )
 
