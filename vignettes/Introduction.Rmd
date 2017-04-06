@@ -269,9 +269,9 @@ objects. This method facilitates analyses of subsets of samples and features
 using logical expressions applied to the `phenoData` and `featureData` slots:
 
 ```{r subset}
-fData(eset)[,'dummy'] <- sample(LETTERS, nrow(eset), TRUE)
-subEset <- subset(eset, pheno = (Time == '2H'), feature = (dummy < 'N'))
-dim(eset); dim(subEset)
+fData(Bt.eset)[,'dummy'] <- sample(LETTERS, nrow(Bt.eset), TRUE)
+Bt.sub <- subset(Bt.eset, pheno = (Time == '2H'), feature = (dummy < 'N'))
+dim(Bt.eset); dim(Bt.sub)
 ```
 
 # Notes
