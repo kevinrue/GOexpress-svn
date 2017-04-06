@@ -71,7 +71,7 @@ setMethod(
     goIds <- unique(map@table[,'go'])
     goTable <- data.frame(
         rank = goRank[goIds],
-        n = totalFeatures,
+        n = totalFeatures[goIds],
         d = 0,
         row.names = goIds
     )

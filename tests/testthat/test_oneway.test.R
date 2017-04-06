@@ -63,6 +63,7 @@ test_that("GOrank works on multiHtest objects",{
     expect_s4_class(gr,"GOSummarisedRank")
     expect_equal(gr@pFactor, "Infection")
     expect_equal(gr@metric, c("statistic", "multiHtest"))
+    expect_true(all(gr@table$n >= gr@table$d))
 
 })
 

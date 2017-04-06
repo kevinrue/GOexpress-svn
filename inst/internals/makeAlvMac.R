@@ -10,6 +10,8 @@ colnames(pSplit) <- c("Animal","Infection","Timepoint","Strand")
 
 pSplit[,"Strand"] <- NULL
 
+pSplit[,"Timepoint"] <- factor(pSplit[,"Timepoint"], c('0H','2H','6H','24H','48H'))
+
 pSplit[,"Time"] <- as.numeric(gsub("H", "", pSplit[,"Timepoint"]))
 
 pSplit[,"ID"] <- gsub("_S$", "", countFiles)
@@ -17,8 +19,9 @@ pSplit[,"ID"] <- gsub("_S$", "", countFiles)
 pSplit[,"files"] <- countFiles
 
 keepAnimals <- sample(levels(pSplit[,"Animal"]), 5)
+keepTimepoints <- c('2H','24H','48H')
 
-pSplit <- subset(pSplit, Animal %in% keepAnimals)
+# pSplit <- subset(pSplit, Animal %in% keepAnimals)
 
 RG <- readDGE(
     pSplit,
@@ -31,6 +34,7 @@ RG.cpm <- cpm(RG)
 avgCpm <- rowMeans(RG.cpm)
 plot(density(log10(avgCpm)))
 
+# For normalisation filter, retain genes with 10 animals above 1 CPM
 keep <- rowSums(cpm(RG) > 1) >= 10
 table(keep)
 
@@ -38,25 +42,37 @@ RG.detected <- RG[keep, , keep.lib.sizes = FALSE]
 
 RG.detected <- calcNormFactors(RG.detected)
 
-avgCPM <- rowMeans(cpm(RG.detected))
+# Now, filter to an acceptable size for an R package
+# order remaining features by decreasing expression level
+oo <- order(avgCpm[keep], decreasing = TRUE)
+# Retain the top 2,000
+RG.top <- RG.detected[oo,][1:4E3,]
+
+RG.subset <- RG.top[
+    ,
+    RG.top$samples$Timepoint %in% keepTimepoints &
+        RG.top$samples$Animal %in% keepAnimals
+]
+
+avgCPM <- rowMeans(cpm(RG.subset))
 plot(density(log2(avgCPM)))
 table(avgCPM > 10)
 
-Bt.logCPM <- cpm(RG.detected, log = TRUE)[avgCPM > 10,]
+Bt.logCPM <- cpm(RG.subset, log = TRUE)[avgCPM > 10,]
 dim(Bt.logCPM); class(Bt.logCPM)
 
 save(Bt.logCPM, file="data/Bt.logCPM.rda")
 tools::resaveRdaFiles("data/Bt.logCPM.rda")
 
-BtPheno <- RG.detected$samples
-BtPheno$files <- NULL
-BtPheno$lib.size <- NULL
-BtPheno$norm.factors <- NULL
+Bt.pheno <- RG.subset$samples
+Bt.pheno$files <- NULL
+Bt.pheno$lib.size <- NULL
+Bt.pheno$norm.factors <- NULL
 
-lapply(BtPheno, class)
+lapply(Bt.pheno, class)
 
-save(BtPheno, file="data/BtPheno.rda")
-tools::resaveRdaFiles("data/BtPheno.rda")
+save(Bt.pheno, file="data/Bt.pheno.rda")
+tools::resaveRdaFiles("data/Bt.pheno.rda")
 
 # zz <- file("inst/extdata/alvmac_norm.csv.gz",'rt')  # open an input file connection
 # dat = read.csv(zz, row.names = 1)

@@ -6,6 +6,7 @@ df <- data.frame(
     stringsAsFactors = FALSE
 )
 df <- rbind(df, c('', ''))
+df <- rbind(df, df[1,])
 
 # Constructors ----
 
@@ -13,6 +14,7 @@ gm <- GOMap(df, "dummy")
 
 test_that("Constructor produce a valid object",{
     expect_s4_class(gm, "GOMap")
+    expect_identical(sum(duplicated(gm@table)), as.integer(0))
 })
 
 # show(GOMap) ----
