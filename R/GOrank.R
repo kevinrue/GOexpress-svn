@@ -21,7 +21,7 @@ setMethod(
     "GOrank", c("randomForest", "GOMap"), function(x, map, ...){
         metric <- 'MeanDecreaseGini'
         # Get the metric
-        geneMetric <- randomForest::importance(x)[,"MeanDecreaseGini"]
+        geneMetric <- randomForest::importance(x)[,metric]
         names(geneMetric) <- rownames(randomForest::importance(x))
         # Pass the named metric to the core function
         gor <- .GOrank(geneMetric, map, ...)
