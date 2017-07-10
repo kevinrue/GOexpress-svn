@@ -16,7 +16,10 @@ with additional layers and \code{\link[ggplot2:theme]{theme}} elements.
 
 \usage{
     \S4method{smoothExpression}{ExpressionSet,character}(
-    eset, feature, x, group = NULL, ..., assay = "exprs")
+        eset, feature, x, group = NULL, ...,
+        assay = "exprs", alpha = GeomSmooth$default_aes$alpha,
+        scales = "fixed"
+    )
 }
 
 \arguments{
@@ -47,12 +50,22 @@ with additional layers and \code{\link[ggplot2:theme]{theme}} elements.
         Aesthetic \code{aes(fill, colour)} are matched to \code{group}.
     }
     \item{\dots}{
-        Additional arguments passed to and from other methods.
+        Additional arguments passed to \code{geom_smooth}.
     }
     \item{assay}{
         Name of a matrix in \code{assayData(eset)}.
         The associated data will be stored in the column \code{y} of the
         output \code{data.frame}.
+    }
+    \item{alpha}{
+        Controls transparency of \code{geom_smooth} layer.
+        Default to the value of \code{ggplot2::GeomSmooth$default_aes$alpha}.
+    }
+    \item{scales}{
+        When multiple features are plotted in separate facets,
+        controls whether scales be fixed (\code{"fixed"}, the default),
+        free (\code{"free"}),
+        or free in one dimension (\code{"free_x"}, \code{"free_y"}).
     }
 }
 
@@ -90,24 +103,30 @@ eset <- ExpressionSet(
 
 # Example ----
 
-smoothExpression(
-    eset,
-    feature = head(featureNames(eset), 2),
-    x = "Timepoint", group = "Infection"
-)
+geneId <- head(featureNames(eset), 1)
+geneIds <- head(featureNames(eset), 2)
 
 require(ggplot2)
 smoothExpression(
-    eset,
-    feature = head(featureNames(eset), 2),
+    eset, geneId,
     x = "Timepoint", group = "Infection",
-    nrow = 1, scales = "free_y"
-) +
-    theme_bw() +
-    geom_point(
+    level = 0.5 # geom_smooth(level = ...)
+) + theme_minimal()
+
+smoothExpression(
+    eset, geneIds,
+    x = "Timepoint", group = "Infection"
+)
+
+smoothExpression(
+    eset, geneIds,
+    x = "Timepoint", group = "Infection",
+    nrow = 1, scales = "free_y", alpha = 0.2
+) + geom_point(
         aes(x, y, colour = group),
         position = position_dodge(width = 2)
-    )
+    ) +
+    theme_bw()
 }
 
 \keyword{ GOexpress }

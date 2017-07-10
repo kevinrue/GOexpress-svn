@@ -30,7 +30,7 @@ setGeneric(
     "ggFeature",
     signature = c("eset"),
     function(
-        eset, feature, ...,
+        eset, feature,
         x = NULL, assay = "exprs", group = NULL,
         colour = NULL, shape = NULL, fill = NULL, facet = NULL
     )
@@ -40,7 +40,11 @@ setGeneric(
 setGeneric(
     "smoothExpression",
     signature = c("eset", "feature"),
-    function(eset, feature, x, group = NULL, ..., assay = "exprs")
+    function(
+        eset, feature, x, group = NULL, ...,
+        assay = "exprs", alpha = GeomSmooth$default_aes$alpha,
+        scales = "fixed"
+    )
         standardGeneric("smoothExpression")
 )
 

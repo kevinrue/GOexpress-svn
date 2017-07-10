@@ -14,7 +14,7 @@ Assemble expression level, feature and samples identifiers in a
 
 \usage{
     \S4method{ggFeature}{ExpressionSet}(
-        eset, feature, ...,
+        eset, feature,
         x = NULL, assay = "exprs", group = NULL,
         colour = NULL, shape = NULL, fill = NULL, facet = NULL
     )
@@ -34,9 +34,6 @@ Assemble expression level, feature and samples identifiers in a
     \code{feature}, \code{sample}, and \code{y}
     of the output \code{data.frame}.
     See \code{assay} below for more information.
-    }
-    \item{\dots}{
-    Additional arguments passed to and from other methods.
     }
     \item{x}{
     Name of a column in \code{pData(eset)}.
@@ -101,27 +98,32 @@ eset <- ExpressionSet(
 
 # Example ----
 
-gg.df <- ggFeature(eset, feature = head(featureNames(eset), 1))
+geneId <- head(featureNames(eset), 1)
+geneIds <- head(featureNames(eset), 2)
+
+gg.df <- ggFeature(eset, feature = geneId)
 
 gg.df <- ggFeature(
     subset(eset, Time == "2H" & Infection == "CN"),
-    feature = head(featureNames(eset), 1)
+    feature = geneIds,
+    x = "Time", colour = "Infection"
 )
 
 require(ggplot2)
 ggplot(
     ggFeature(
-        eset,
-        feature = head(featureNames(eset), 2),
+        eset, geneIds,
         x = "Timepoint",
         facet = "Infection"
     )
 ) + facet_grid(feature ~ facet, scales = "free_y") +
-    geom_smooth(aes(x, y)) +
+    geom_smooth(aes(x, y, fill = facet, colour = facet)) +
     labs(
         x = "Timepoint",
-        y = "exprs"
-    )
+        y = "exprs",
+        fill = "Infection", colour = "Infection"
+    ) +
+    theme_bw()
 }
 
 \keyword{ GOexpress }

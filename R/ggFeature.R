@@ -2,7 +2,7 @@
 setMethod(
     "ggFeature", c("ExpressionSet"),
     function(
-        eset, feature, ...,
+        eset, feature,
         x = NULL, assay = "exprs", group = NULL,
         colour = NULL, shape = NULL, fill = NULL, facet = NULL
     ){
@@ -18,7 +18,8 @@ setMethod(
                 feature = feature,
                 sample = sampleNames(eset),
                 y = exprsMat,
-                row.names = NULL
+                row.names = NULL,
+                stringsAsFactors = FALSE
             )
         } else {
             ggData <- melt(
@@ -27,12 +28,12 @@ setMethod(
                 value.name = "y"
             )
         }
-        ggData[, "x"] <- pData(eset)[ggData$feature, x]
-        ggData[, "group"] <- pData(eset)[ggData$feature, group]
-        ggData[, "colour"] <- pData(eset)[ggData$feature, colour]
-        ggData[, "shape"] <- pData(eset)[ggData$feature, shape]
-        ggData[, "fill"] <- pData(eset)[ggData$feature, fill]
-        ggData[, "facet"] <- pData(eset)[ggData$feature, facet]
+        ggData[, "x"] <- pData(eset)[ggData$sample, x]
+        ggData[, "group"] <- pData(eset)[ggData$sample, group]
+        ggData[, "colour"] <- pData(eset)[ggData$sample, colour]
+        ggData[, "shape"] <- pData(eset)[ggData$sample, shape]
+        ggData[, "fill"] <- pData(eset)[ggData$sample, fill]
+        ggData[, "facet"] <- pData(eset)[ggData$sample, facet]
         return(ggData)
     }
 )
