@@ -18,6 +18,7 @@ importFrom(
 )
 
 # GOexpress"1"
+# Remove when defunct
 importFrom(
     "RColorBrewer",
     "brewer.pal"
@@ -40,6 +41,7 @@ export("GOMap")
 export("GOrank")
 
 # GOexpress"1"
+# Defunct in future versions
 
 # Functions available to the user (API)
 export("cluster_GO")
