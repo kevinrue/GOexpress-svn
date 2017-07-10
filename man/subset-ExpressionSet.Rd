@@ -36,7 +36,7 @@ for \code{ExpressionSet} objects.
 }
 
 \value{
-AnGO \code{\linkS4class{ExpressionSet}} object.
+A new, subsetted, \code{\linkS4class{ExpressionSet}} object.
 }
 
 \author{
@@ -64,8 +64,14 @@ fData(eset)[,'dummy'] <- sample(LETTERS, nrow(eset), TRUE)
 # Example ----
 
 subset(eset, Time == '2H')
+
 subset(eset, feature = (dummy < 'N'))
-subset(eset, pheno = (Time == '2H'), feature = (dummy < 'N'))
+
+subset(
+    eset,
+    pheno = (Time == '2H' & Infection != 'CN'),
+    feature = (dummy > 'E' & dummy < 'N')
+)
 }
 
 \keyword{ GOexpress }
