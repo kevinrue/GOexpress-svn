@@ -20,9 +20,28 @@ setGeneric(
 )
 
 setGeneric(
-    "GOrank", signature = c("x", "map"),
+    "GOrank",
+    signature = c("x", "map"),
     function(x, map, ...)
         standardGeneric("GOrank")
+)
+
+setGeneric(
+    "ggFeature",
+    signature = c("eset"),
+    function(
+        eset, feature, ...,
+        x = NULL, assay = "exprs", group = NULL,
+        colour = NULL, shape = NULL, fill = NULL, facet = NULL
+    )
+        standardGeneric("ggFeature")
+)
+
+setGeneric(
+    "smoothExpression",
+    signature = c("eset", "feature"),
+    function(eset, feature, x, group = NULL, ..., assay = "exprs")
+        standardGeneric("smoothExpression")
 )
 
 setGeneric("nrow")

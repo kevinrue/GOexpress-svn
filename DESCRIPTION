@@ -27,7 +27,7 @@ Description: The package contains methods to visualise the expression profile
     experimental samples using gene expression data.
 Depends: R (>= 3.4), Biobase (>= 2.22.0), methods
 Imports: randomForest (>= 4.6), broom (>= 0.4.2), stats,
-    RColorBrewer, gplots
+    RColorBrewer, gplots, ggplot2, reshape2
 Suggests: BiocStyle, knitr, rmarkdown, testthat
 License: GPL (>= 3)
 biocViews: Software, GeneExpression, Transcription, DifferentialExpression,

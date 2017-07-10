@@ -1,6 +1,7 @@
 # Package required for the features of GOexpress to work
 import("Biobase")
 import("methods")
+import("ggplot2")
 
 importFrom(
     "stats",
@@ -15,6 +16,11 @@ importFrom(
 importFrom(
     "broom",
     "tidy"
+)
+
+importFrom(
+    "reshape2",
+    "melt"
 )
 
 # GOexpress"1"
@@ -39,6 +45,8 @@ export("head")
 export("tail")
 export("GOMap")
 export("GOrank")
+export("ggFeature")
+export("smoothExpression")
 
 # GOexpress"1"
 # Defunct in future versions

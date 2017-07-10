@@ -1,0 +1,113 @@
+\name{smoothExpression}
+
+\alias{smoothExpression}
+\alias{smoothExpression,ExpressionSet,character-method}
+
+\title{
+\code{geom_smooth} layer of expression data
+}
+
+\description{
+Displays expression data using a \code{smooth_geom}.
+
+The resulting \code{\link[ggplot2:ggplot]{ggplot}} object can be modified
+with additional layers and \code{\link[ggplot2:theme]{theme}} elements.
+}
+
+\usage{
+    \S4method{smoothExpression}{ExpressionSet,character}(
+    eset, feature, x, group = NULL, ..., assay = "exprs")
+}
+
+\arguments{
+    \item{eset}{
+        An \code{\linkS4class{ExpressionSet}}.
+    }
+    \item{feature}{
+        A \code{character} vector of feature identifiers present in
+        \code{featureNames(eset)}.
+
+        Multiple features can be given (\emph{e.g.}, for later faceting).
+        In that case, the \code{assay} matrix is
+        \code{\link[reshape2:melt]{melted}} and stored in columns
+        \code{feature}, \code{sample}, and \code{y}
+        of the output \code{data.frame}.
+        See \code{assay} below for more information.
+    }
+    \item{x}{
+        Name of a column in \code{pData(eset)}.
+        The associated data will be stored in the column \code{x} of the
+        output \code{data.frame}.
+    }
+    \item{group}{
+        \emph{(Optional)} Name of a column in \code{pData(eset)}.
+        The associated data will be stored in the column \code{group} of the
+        output \code{data.frame}.
+
+        Aesthetic \code{aes(fill, colour)} are matched to \code{group}.
+    }
+    \item{\dots}{
+        Additional arguments passed to and from other methods.
+    }
+    \item{assay}{
+        Name of a matrix in \code{assayData(eset)}.
+        The associated data will be stored in the column \code{y} of the
+        output \code{data.frame}.
+    }
+}
+
+\value{
+A \code{ggplot} object.
+}
+
+\author{
+    Kevin Rue-Albrecht
+}
+
+\seealso{
+    \code{\link[ggplot2:ggplot]{ggplot}},
+    \code{\link{ggFeature}}.
+}
+
+\details{
+If multiple feature identifiers are requested, they are displayed as
+\code{\link[ggplot2:facet_wrap]{facet_wrap}}.
+See \code{\link{ggFeature}} for examples to display them
+as \code{\link[ggplot2:facet_grid]{facet_grid}}.
+}
+
+\examples{
+# Example data ----
+
+exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
+pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
+exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
+pdataCSV <- read.csv(pdataFile, row.names = 1)
+eset <- ExpressionSet(
+    exprsCSV,
+    AnnotatedDataFrame(pdataCSV)
+)
+
+# Example ----
+
+smoothExpression(
+    eset,
+    feature = head(featureNames(eset), 2),
+    x = "Timepoint", group = "Infection"
+)
+
+require(ggplot2)
+smoothExpression(
+    eset,
+    feature = head(featureNames(eset), 2),
+    x = "Timepoint", group = "Infection",
+    nrow = 1, scales = "free_y"
+) +
+    theme_bw() +
+    geom_point(
+        aes(x, y, colour = group),
+        position = position_dodge(width = 2)
+    )
+}
+
+\keyword{ GOexpress }
