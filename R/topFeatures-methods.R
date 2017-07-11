@@ -8,3 +8,14 @@ setMethod(
         return(head(ii[oo,], n))
     }
 )
+
+# multiHtest ----
+
+setMethod(
+    "topFeatures", "multiHtest",
+    function(x, n = 6L){
+        ii <- x@table
+        oo <- order(ii[, "statistic"], decreasing = TRUE)
+        return(head(ii[oo,], n))
+    }
+)
