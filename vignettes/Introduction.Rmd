@@ -259,7 +259,7 @@ gr
 ```
 
 **Note**: this analysis considers the `Infection` factor *only*,
-irrespective of other experimental factors such as `Time` and `Animal`;
+irrespective of other experimental factors such as `Timepoint` and `Animal`;
 to reach a high statistic, features must show a consistent difference between
 `Infection`, independently of other factors.
 Alternatively, a subset of samples from the input `ExpressionSet`
@@ -281,7 +281,7 @@ using logical expressions applied to the `phenoData` and `featureData` slots:
 
 ```{r subset}
 fData(Bt.eset)[,'dummy'] <- sample(LETTERS, nrow(Bt.eset), TRUE)
-Bt.sub <- subset(Bt.eset, pheno = (Time == '2H'), feature = (dummy < 'N'))
+Bt.sub <- subset(Bt.eset, pheno = (Timepoint == '2H'), feature = (dummy < 'N'))
 dim(Bt.eset); dim(Bt.sub)
 ```
 

@@ -60,7 +60,7 @@ fData(Bt.eset)[,'dummy'] <- sample(LETTERS, nrow(Bt.eset), TRUE)
 
 # Example ----
 
-subset(Bt.eset, Time == '2H')
+subset(Bt.eset, Timepoint == '2H')
 
 subset(Bt.eset, feature = (dummy < 'N'))
 
