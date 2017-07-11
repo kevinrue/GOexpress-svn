@@ -305,21 +305,13 @@ For this purpose, let us identify:
 * the most important feature identified by the `randomForest` method:
 
 ```{r bestFeature.rf}
-bestFeature.rf <- head(rownames(
-    randomForest::importance(rf)[order(
-        randomForest::importance(rf)[,"MeanDecreaseGini"],
-        decreasing = TRUE),
-    ]), 1)
+bestFeature.rf <- rownames(topFeatures(rf, 1))
 ```
 
 * the least important feature identified by the `randomForest` method:
 
 ```{r worstFeature.rf}
-worstFeature.rf <- tail(rownames(
-    randomForest::importance(rf)[order(
-        randomForest::importance(rf)[,"MeanDecreaseGini"],
-        decreasing = TRUE),
-    ]), 1)
+worstFeature.rf <- tail(rownames(topFeatures(rf, nrow(rf$importance))), 1)
 ```
 
 ## Smoothed feature profile
@@ -356,7 +348,7 @@ The `ggfy` method combines expression data for any number of features
 with fields from the `phenoData` and `featureData` slots
 in a `data.frame` ready for use by `r CRANpkg("ggplot2")` methods:
 
-```{r}
+```{r ggfy}
 ggplot(ggfy(
     Bt.eset[c(bestFeature.rf, worstFeature.rf),],
     pheno = c("Animal", "Time", "Infection"),
@@ -364,7 +356,7 @@ ggplot(ggfy(
     assay = "exprs"
 )) +
     facet_grid(feature ~ Animal) +
-    geom_line(aes(Time, exprs, colour = Infection)) +
+    geom_line(aes(Time, exprs, colour = Infection, linetype = dummy)) +
     scale_y_continuous(limits = range(exprs(Bt.eset))) +
     theme_bw()
 ```

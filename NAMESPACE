@@ -47,6 +47,7 @@ export("GOMap")
 export("GOrank")
 export("ggfy")
 export("smoothFeature")
+export("topFeatures")
 
 # GOexpress"1"
 # Defunct in future versions

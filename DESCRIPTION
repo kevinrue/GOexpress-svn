@@ -35,6 +35,7 @@ Collate: AllClasses.R AllGenerics.R
     ggfy-methods.R GOrank-methods.R head-methods.R listMethods.R
     oneway.test-methods.R p.adjust-methods.R randomForest-methods.R
     show-methods.R smoothFeature-methods.R subset-methods.R tail-methods.R
+    topFeatures-methods.R
     analysis.R post_analysis.R
 biocViews: Software, GeneExpression, Transcription, DifferentialExpression,
     GeneSetEnrichment, DataRepresentation, Clustering, ExperimentalDesign,

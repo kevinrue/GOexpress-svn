@@ -49,3 +49,10 @@ setGeneric(
 
 setGeneric("nrow")
 setGeneric("subset")
+
+setGeneric(
+    "topFeatures",
+    signature = c("x"),
+    function(x, n = 6L, value = "MeanDecreaseGini")
+        standardGeneric("topFeatures")
+)
