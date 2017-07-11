@@ -77,23 +77,19 @@ A \code{data.frame} object.
 \examples{
 # Example data ----
 
-exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
-pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
-exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
-pdataCSV <- read.csv(pdataFile, row.names = 1)
-eset <- ExpressionSet(
-    exprsCSV,
-    AnnotatedDataFrame(pdataCSV)
-)
+data(Bt.logCPM)
+data(Bt.pheno)
+
+Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 
 # Example ----
 
 # First feature
-gg.df <- ggPheno(eset[1,])
+gg.df <- ggPheno(Bt.eset[1,])
 
 # First two features, in a subset of samples
 gg.df <- ggPheno(
-    subset(eset[1:2,], Time == "2H" & Infection == "CN"),
+    subset(Bt.eset[1:2,], Time == "2H" & Infection == "CN"),
     x = "Time",
     colour = "Infection"
 )
@@ -101,7 +97,7 @@ gg.df <- ggPheno(
 require(ggplot2)
 ggplot(
     ggPheno(
-        eset[1:2,],
+        Bt.eset[1:2,],
         x = "Timepoint",
         facet = "Infection"
     )

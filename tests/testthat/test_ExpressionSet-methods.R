@@ -1,23 +1,15 @@
-exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
-pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
+Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 
-exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
-pdataCSV <- read.csv(pdataFile, row.names = 1)
-eset <- ExpressionSet(
-    exprsCSV,
-    AnnotatedDataFrame(pdataCSV)
-)
-
-fData(eset)[,'dummy'] <- sample(LETTERS, nrow(eset), TRUE)
+fData(Bt.eset)[,'dummy'] <- rnorm(nrow(Bt.eset))
 
 # subset ----
 
 test_that("subset works",{
 
-    s <- subset(eset, pheno = (Time == '2H'), feature = (dummy < 'N'))
+    s <- subset(Bt.eset, pheno = (Timepoint == '2H'), feature = (dummy < 0))
 
     expect_s4_class(s, "ExpressionSet")
-    expect_lt(nrow(s), nrow(eset))
-    expect_lt(ncol(s), ncol(eset))
+    expect_lt(nrow(s), nrow(Bt.eset))
+    expect_lt(ncol(s), ncol(Bt.eset))
 
 })

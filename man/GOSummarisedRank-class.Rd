@@ -24,20 +24,17 @@ Kevin Rue-Albrecht
 \examples{
 # Example data ----
 
-exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
-pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
-exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
-pdataCSV <- read.csv(pdataFile, row.names = 1)
-eset <- ExpressionSet(
-    exprsCSV,
-    AnnotatedDataFrame(pdataCSV)
-)
-
 data("Bt.GOMap")
+
+data(Bt.logCPM)
+data(Bt.pheno)
+
+Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 
 # Preprocessing ----
 
-ow <- oneway.test(eset, "Infection")
+# Test first 50 features
+ow <- oneway.test(Bt.eset[1:50,], "Infection")
 gr <- GOrank(ow, Bt.GOMap)
 
 # Examples ----

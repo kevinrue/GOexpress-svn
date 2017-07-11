@@ -81,31 +81,27 @@ as \code{\link[ggplot2:facet_grid]{facet_grid}}.
 \examples{
 # Example data ----
 
-exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
-pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
-exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
-pdataCSV <- read.csv(pdataFile, row.names = 1)
-eset <- ExpressionSet(
-    exprsCSV,
-    AnnotatedDataFrame(pdataCSV)
-)
+data(Bt.logCPM)
+data(Bt.pheno)
+
+Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 
 # Example ----
 
 require(ggplot2)
 smoothFeature(
-    eset[1,],
+    Bt.eset[1,],
     x = "Timepoint", group = "Infection",
     level = 0.5 # geom_smooth(level = ...)
 ) + theme_minimal()
 
 smoothFeature(
-    eset[1:2,],
+    Bt.eset[1:2,],
     x = "Timepoint", group = "Infection", alpha = 0.3
 )
 
 smoothFeature(
-    eset[1:2,],
+    Bt.eset[1:2,],
     x = "Timepoint", group = "Infection",
     nrow = 1, scales = "free_y", alpha = 0.2
 ) + geom_point(

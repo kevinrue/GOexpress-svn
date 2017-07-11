@@ -1,17 +1,9 @@
 
-exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
-pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
-
-exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
-pdataCSV <- read.csv(pdataFile, row.names = 1)
-eset <- ExpressionSet(
-    exprsCSV,
-    AnnotatedDataFrame(pdataCSV)
-)
+Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 
 # Constructors ----
 
-rf <- randomForest(eset, "Infection")
+rf <- randomForest(Bt.eset, "Infection")
 
 test_that("simple usage",{
 

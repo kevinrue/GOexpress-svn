@@ -51,25 +51,22 @@ A new, subsetted, \code{\linkS4class{ExpressionSet}} object.
 \examples{
 # Example data ----
 
-exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
-pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
-exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
-pdataCSV <- read.csv(pdataFile, row.names = 1)
-eset <- ExpressionSet(
-    exprsCSV,
-    AnnotatedDataFrame(pdataCSV)
-)
-fData(eset)[,'dummy'] <- sample(LETTERS, nrow(eset), TRUE)
+data(Bt.logCPM)
+data(Bt.pheno)
+
+Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
+
+fData(Bt.eset)[,'dummy'] <- sample(LETTERS, nrow(Bt.eset), TRUE)
 
 # Example ----
 
-subset(eset, Time == '2H')
+subset(Bt.eset, Time == '2H')
 
-subset(eset, feature = (dummy < 'N'))
+subset(Bt.eset, feature = (dummy < 'N'))
 
 subset(
-    eset,
-    pheno = (Time == '2H' & Infection != 'CN'),
+    Bt.eset,
+    pheno = (Timepoint == '2H' & Infection != 'CN'),
     feature = (dummy > 'E' & dummy < 'N')
 )
 }

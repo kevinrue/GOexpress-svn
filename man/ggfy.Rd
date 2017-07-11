@@ -59,32 +59,28 @@ A \code{data.frame} object.
 \examples{
 # Example data ----
 
-exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
-pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
-exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
-pdataCSV <- read.csv(pdataFile, row.names = 1)
-eset <- ExpressionSet(
-    exprsCSV,
-    AnnotatedDataFrame(pdataCSV)
-)
+data(Bt.logCPM)
+data(Bt.pheno)
 
-fData(eset)[,"dummy"] <- as.factor(
-    sample(LETTERS, size = nrow(eset), replace = TRUE))
+Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
+
+fData(Bt.eset)[,"dummy"] <- as.factor(
+    sample(LETTERS, size = nrow(Bt.eset), replace = TRUE))
 
 # Example ----
 
 # First feature
-gg.df <- ggfy(eset[1,], pheno = c("Time"), feature = "dummy")
+gg.df <- ggfy(Bt.eset[1,], pheno = c("Time"), feature = "dummy")
 
 # First two features, in a subset of samples
 gg.df <- ggfy(
-    subset(eset[1:2,], Time == "2H" & Infection == "CN"),
+    subset(Bt.eset[1:2,], Time == "2H" & Infection == "CN"),
     pheno = c("Time", "Infection")
 )
 
 require(ggplot2)
 ggplot(ggfy(
-    eset[1:2,],
+    Bt.eset[1:2,],
     pheno = c("Timepoint", "Infection", "Animal"),
     feature = c("dummy")
 )) +
@@ -95,7 +91,7 @@ ggplot(ggfy(
     facet_grid(feature ~ Animal)
 
 ggplot(ggfy(
-    eset[1:2,],
+    Bt.eset[1:2,],
     pheno = c("Timepoint", "Infection", "Animal"),
     feature = c("dummy")
 )) +

@@ -47,21 +47,16 @@ Kevin Rue-Albrecht
 \examples{
 # Example data ----
 
-# Example ExpressionSet
-exprFile <- system.file("extdata", "alvmac_exprs.csv", package = "GOexpress")
-pdataFile <- system.file("extdata", "alvmac_pdata.csv", package = "GOexpress")
+data(Bt.logCPM)
+data(Bt.pheno)
 
-exprsCSV <- as.matrix(read.csv(exprFile, row.names = 1))
-pdataCSV <- read.csv(pdataFile, row.names = 1)
-eset <- ExpressionSet(
-    exprsCSV,
-    AnnotatedDataFrame(pdataCSV)
-)
+Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 
 # Available phenoData columns
-names(pData(eset))
+names(pData(Bt.eset))
 
-ow <- oneway.test(eset, "Infection")
+# Test the first 10 features
+ow <- oneway.test(Bt.eset[1:10,], "Infection")
 
 head(ow, n = 3)
 tail(ow, n = 3)

@@ -18,9 +18,6 @@ pSplit[,"ID"] <- gsub("_S$", "", countFiles)
 
 pSplit[,"files"] <- countFiles
 
-keepAnimals <- sample(levels(pSplit[,"Animal"]), 5)
-keepTimepoints <- c('2H','24H','48H')
-
 # pSplit <- subset(pSplit, Animal %in% keepAnimals)
 
 RG <- readDGE(
@@ -42,17 +39,25 @@ RG.detected <- RG[keep, , keep.lib.sizes = FALSE]
 
 RG.detected <- calcNormFactors(RG.detected)
 
-# Now, filter to an acceptable size for an R package
+# Restrict data set to fit an acceptable Bioconductor package size ----
+
 # order remaining features by decreasing expression level
 oo <- order(avgCpm[keep], decreasing = TRUE)
-# Retain the top 2,000
+# Retain the top 4,000 highest expressed features
 RG.top <- RG.detected[oo,][1:4E3,]
+
+# Retain only certains Animal and Timepoints
+
+keepAnimals <- c("N1178", "N121", "N138",  "N158R", "N1855")
+keepTimepoints <- c('2H','24H','48H')
 
 RG.subset <- RG.top[
     ,
     RG.top$samples$Timepoint %in% keepTimepoints &
         RG.top$samples$Animal %in% keepAnimals
 ]
+
+
 
 avgCPM <- rowMeans(cpm(RG.subset))
 plot(density(log2(avgCPM)))
