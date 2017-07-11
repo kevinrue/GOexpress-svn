@@ -14,6 +14,9 @@ colnames(bm)
 bm.sub <- subset(bm, ensembl_gene_id != '' & go_id != '')
 dim(bm.sub)
 
+# Requires makeAlvMac.R script run first
+bm.sub <- subset(bm.sub, feature %in% rownames(Bt.logCPM))
+
 bm.source <- c(
     'biomaRt',
     'btaurus_gene_ensembl',
