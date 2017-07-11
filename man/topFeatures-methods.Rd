@@ -57,8 +57,9 @@ Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 names(pData(Bt.eset))
 
 # Test the first 20 features
-rf <- topFeatures(Bt.eset[1:20,], "Infection")
-plot(rf)
+rf <- randomForest(Bt.eset[1:20,], "Infection")
+
+topFeatures(rf)
 }
 
 \keyword{ GOexpress }
