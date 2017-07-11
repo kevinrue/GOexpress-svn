@@ -15,10 +15,10 @@ as a \code{data.frame} ready for use by \code{ggplot} functions.
 }
 
 \usage{
-    \S4method{ggfy}{ExpressionSet}(
-        eset, pheno = NULL, feature = NULL, assay = "exprs",
-        suffixes = c(".pheno",".feature")
-    )
+\S4method{ggfy}{ExpressionSet}(
+    eset, pheno = NULL, feature = NULL, assay = "exprs",
+    suffixes = c(".pheno",".feature")
+)
 }
 
 \arguments{

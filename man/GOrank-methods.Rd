@@ -14,8 +14,8 @@ associated features.
 }
 
 \usage{
-    \S4method{GOrank}{multiHtest,GOMap}(x, map, ...)
-    \S4method{GOrank}{randomForest,GOMap}(x, map, ...)
+\S4method{GOrank}{multiHtest,GOMap}(x, map, ...)
+\S4method{GOrank}{randomForest,GOMap}(x, map, ...)
 }
 
 \arguments{

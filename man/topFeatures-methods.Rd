@@ -13,8 +13,8 @@ by any one column (default: \code{"MeanDecreaseGini"}).
 }
 
 \usage{
-    \S4method{topFeatures}{randomForest}(
-        x, n = 6L, value = "MeanDecreaseGini")
+\S4method{topFeatures}{randomForest}(
+    x, n = 6L, value = "MeanDecreaseGini")
 }
 
 \arguments{

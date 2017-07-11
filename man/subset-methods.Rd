@@ -15,7 +15,7 @@ for \code{ExpressionSet} objects.
 }
 
 \usage{
-    \S4method{subset}{ExpressionSet}(x, pheno, feature, ...)
+\S4method{subset}{ExpressionSet}(x, pheno, feature, ...)
 }
 
 \arguments{

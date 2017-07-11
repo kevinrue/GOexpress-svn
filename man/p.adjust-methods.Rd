@@ -13,7 +13,7 @@ Calls the \code{stats::p.adjust} method on a \code{multiHtest}.
 }
 
 \usage{
-    \S4method{p.adjust}{multiHtest}(x, method = p.adjust.methods, ...)
+\S4method{p.adjust}{multiHtest}(x, method = p.adjust.methods, ...)
 }
 
 \arguments{

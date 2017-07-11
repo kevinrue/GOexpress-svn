@@ -15,11 +15,11 @@ with additional layers and \code{\link[ggplot2:theme]{theme}} elements.
 }
 
 \usage{
-    \S4method{smoothFeature}{ExpressionSet}(
-        eset, x, group = NULL, ...,
-        assay = "exprs", alpha = GeomSmooth$default_aes$alpha,
-        scales = "fixed"
-    )
+\S4method{smoothFeature}{ExpressionSet}(
+    eset, x, group = NULL, ...,
+    assay = "exprs", alpha = GeomSmooth$default_aes$alpha,
+    scales = "fixed"
+)
 }
 
 \arguments{

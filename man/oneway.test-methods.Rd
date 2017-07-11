@@ -14,7 +14,7 @@ taking the name of a column in the \code{phenoData} slot as grouping factor.
 }
 
 \usage{
-    \S4method{oneway.test}{ExpressionSet,character}(
+\S4method{oneway.test}{ExpressionSet,character}(
     x, pheno, ..., p.adjust = "BH")
 }
 
