@@ -37,17 +37,6 @@ setGeneric(
 )
 
 setGeneric(
-    "ggPheno",
-    signature = c("eset"),
-    function(
-        eset,
-        x = NULL, assay = "exprs", group = NULL,
-        colour = NULL, shape = NULL, fill = NULL, facet = NULL
-    )
-        standardGeneric("ggPheno")
-)
-
-setGeneric(
     "smoothFeature",
     signature = c("eset"),
     function(

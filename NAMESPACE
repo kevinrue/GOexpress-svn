@@ -46,7 +46,6 @@ export("tail")
 export("GOMap")
 export("GOrank")
 export("ggfy")
-export("ggPheno")
 export("smoothFeature")
 
 # GOexpress"1"

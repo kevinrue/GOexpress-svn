@@ -68,14 +68,15 @@ A \code{ggplot} object.
 
 \seealso{
     \code{\link[ggplot2:ggplot]{ggplot}},
-    \code{\link{ggPheno}}.
+    \code{\link{ggfy}}.
 }
 
 \details{
 If multiple feature identifiers are requested, they are displayed as
 \code{\link[ggplot2:facet_wrap]{facet_wrap}}.
-See \code{\link{ggPheno}} for examples to display them
-as \code{\link[ggplot2:facet_grid]{facet_grid}}.
+
+See \code{\link{ggfy}} to obtain full control over the layers,
+aesthetics, and theme elements.
 }
 
 \examples{

@@ -5,7 +5,7 @@ fData(Bt.eset)[,"dummy"] <- as.factor(
 
 # ggfy -----
 
-test_that("ggPheno works",{
+test_that("ggfy works",{
 
     expect_s3_class(
         ggfy(
@@ -28,48 +28,6 @@ test_that("ggPheno works",{
             ) +
             facet_grid(feature ~ Animal),
         "ggplot"
-    )
-
-})
-
-# ggPheno ----
-
-test_that("ggPheno works",{
-
-    # One gene, all aesthetic, keep.names
-    expect_s3_class(
-        ggPheno(
-            Bt.eset[1,], assay = "exprs",
-            x = "Time", group = "Infection", colour = "Animal",
-            shape = "Timepoint", fill = "Group", facet = "Animal"
-        ),
-        "data.frame"
-    )
-
-    # One gene, no aesthetic
-    expect_s3_class(
-        ggPheno(
-            Bt.eset[1,], assay = "exprs"
-        ),
-        "data.frame"
-    )
-
-    # Multiple genes, no aesthetic
-    expect_s3_class(
-        ggPheno(
-            Bt.eset[1:2,], assay = "exprs"
-        ),
-        "data.frame"
-    )
-
-    # One gene, all aesthetic, do not keep.names
-    expect_s3_class(
-        ggPheno(
-            Bt.eset[1,], assay = "exprs",
-            x = "Time", group = "Infection", colour = "Animal",
-            shape = "Timepoint", fill = "Group", facet = "Animal"
-        ),
-        "data.frame"
     )
 
 })
