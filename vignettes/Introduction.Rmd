@@ -165,7 +165,7 @@ and uninformative features are removed to limit the false discovery rate (FDR).
 therefore, users should ensure that adequate filtering and normalisation
 were applied before using dedicated packages (*e.g.*, `edgeR`, `DESeq2`).
 
-In this vignette, let us use a gene-by-sample matrix of normalised
+In this vignette, we use a subset of a gene-by-sample matrix normalised
 log[2]-transformed CPM from an *in vitro* stimulation of bovine macrophages with
 different mycobacterial strains:
 
@@ -173,6 +173,9 @@ different mycobacterial strains:
 data("Bt.logCPM")
 class(Bt.logCPM); dim(Bt.logCPM)
 ```
+
+**Note:**
+See `?Bt.logCPM` for more information.
 
 ### Phenotype information
 
@@ -186,13 +189,33 @@ data("Bt.pheno")
 summary(Bt.pheno)
 ```
 
-To use `r Biocpkg("GOexpress")`, users should ensure
-that experimental factors and levels are correctly set (*e.g.*,
-drop unused levels).
+**Note:**
+To use `r Biocpkg("GOexpress")` in the best conditions,
+users should ensure that experimental factors and levels are correctly set
+(*e.g.*, drop unused levels).
 
 ```{r droplevels}
 Bt.pheno <- droplevels(Bt.pheno)
 ```
+
+### Feature information
+
+Feature annotations may be useful to [subset]() the `ExpressionSet`,
+or control elements of subsequent plots (*e.g.*, facets, aesthetics, labels).
+
+**Note**
+Currently, the `ExpressionSet` included for demonstration does not
+include any annotations in the `featureData` slot. Therefore, let us
+create a dummy annotation for demonstration purposes:
+
+```{r dummy}
+Bt.feature <- data.frame(
+    dummy = sample(LETTERS, nrow(Bt.logCPM), TRUE),
+    row.names = rownames(Bt.logCPM),
+    stringsAsFactors = FALSE
+)
+```
+
 
 ## Experimental factor analysed
 
@@ -233,7 +256,9 @@ may be combined into an `ExpressionSet` as follows:
 
 ```{r ExpressionSet}
 Bt.eset <- ExpressionSet(
-    assayData = Bt.logCPM, phenoData = AnnotatedDataFrame(Bt.pheno)
+    assayData = Bt.logCPM,
+    phenoData = AnnotatedDataFrame(Bt.pheno),
+    featureData = AnnotatedDataFrame(Bt.feature)
 )
 ```
 
@@ -247,6 +272,13 @@ infections:
 rf <- randomForest(Bt.eset, 'Infection')
 ```
 
+The most interesting features for supervised classification may be extracted
+from the `randpomForest` object as follows:
+
+```{r topFeatures}
+topFeatures(rf, n = 3)
+```
+
 ## Rank categories
 
 Here, we demonstrate how the average rank of features annotated to each
@@ -258,7 +290,8 @@ gr <- GOrank(rf, Bt.GOMap)
 gr
 ```
 
-**Note**: this analysis considers the `Infection` factor *only*,
+**Note:**
+This analysis considers the `Infection` factor *only*,
 irrespective of other experimental factors such as `Timepoint` and `Animal`;
 to reach a high statistic, features must show a consistent difference between
 `Infection`, independently of other factors.
@@ -281,7 +314,6 @@ objects. This method facilitates analyses of subsets of samples and features
 using logical expressions applied to the `phenoData` and `featureData` slots:
 
 ```{r subset}
-fData(Bt.eset)[,'dummy'] <- sample(LETTERS, nrow(Bt.eset), TRUE)
 Bt.sub <- subset(Bt.eset, pheno = (Timepoint == '2H'), feature = (dummy < 'N'))
 dim(Bt.eset); dim(Bt.sub)
 ```
@@ -314,19 +346,24 @@ bestFeature.rf <- rownames(topFeatures(rf, 1))
 worstFeature.rf <- tail(rownames(topFeatures(rf, nrow(rf$importance))), 1)
 ```
 
+**Note:**
+For the `randomForest`, features best classifying a particular group of samples
+may be identified using the corresponding column in `importance(rf)`. 
+For instance, `topFeatures(rf,value="CN")`.
+
 ## Smoothed feature profile
 
 We may plot the smoothed expression profile of the most important feature,
 indicating each `Infection` group by a different colour:
 
-```{r smoothFeature_feature}
+```{r smoothFeature_feature, message=FALSE, warning=FALSE}
 smoothFeature(Bt.eset[bestFeature.rf,], x = "Time", group = "Infection")
 ```
 
 It is possible to visualised simultaneously multiple features;
 in that case, the `smoothFeature` creates a new facet for each feature:
 
-```{r smoothFeature_features}
+```{r smoothFeature_features, message=FALSE, warning=FALSE}
 smoothFeature(
     Bt.eset[c(bestFeature.rf, worstFeature.rf),],
     x = "Time", group = "Infection"
