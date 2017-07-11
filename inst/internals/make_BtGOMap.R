@@ -1,5 +1,10 @@
+require(biomaRt)
 
-mart = useMart('ENSEMBL_MART_ENSEMBL', 'btaurus_gene_ensembl', 'feb2014.archive.ensembl.org')
+mart = useMart(
+    biomart = 'ENSEMBL_MART_ENSEMBL',
+    dataset = 'btaurus_gene_ensembl',
+    host = 'feb2014.archive.ensembl.org'
+)
 
 bm <- getBM(c('go_id','ensembl_gene_id'), mart = mart)
 dim(bm)
