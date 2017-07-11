@@ -27,25 +27,35 @@ setGeneric(
 )
 
 setGeneric(
-    "ggFeature",
+    "ggfy",
     signature = c("eset"),
     function(
-        eset, feature,
-        x = NULL, assay = "exprs", group = NULL,
-        colour = NULL, shape = NULL, fill = NULL, facet = NULL
+        eset, pheno = NULL, feature = NULL, assay = "exprs",
+        suffixes = c(".pheno",".feature")
     )
-        standardGeneric("ggFeature")
+        standardGeneric("ggfy")
 )
 
 setGeneric(
-    "smoothExpression",
-    signature = c("eset", "feature"),
+    "ggPheno",
+    signature = c("eset"),
     function(
-        eset, feature, x, group = NULL, ...,
+        eset,
+        x = NULL, assay = "exprs", group = NULL,
+        colour = NULL, shape = NULL, fill = NULL, facet = NULL
+    )
+        standardGeneric("ggPheno")
+)
+
+setGeneric(
+    "smoothFeature",
+    signature = c("eset"),
+    function(
+        eset, x, group = NULL, ...,
         assay = "exprs", alpha = GeomSmooth$default_aes$alpha,
         scales = "fixed"
     )
-        standardGeneric("smoothExpression")
+        standardGeneric("smoothFeature")
 )
 
 setGeneric("nrow")

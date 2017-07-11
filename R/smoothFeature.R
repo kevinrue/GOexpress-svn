@@ -1,29 +1,25 @@
 setMethod(
-    "smoothExpression", c("ExpressionSet", "character"),
+    "smoothFeature", c("ExpressionSet"),
     function(
-        eset, feature, x, group = NULL, ...,
+        eset, x, group = NULL, ...,
         assay = "exprs", alpha = GeomSmooth$default_aes$alpha,
         scales = "fixed"
     ){
-        ggData <- ggFeature(
-            eset, feature,
-            x = x, group = group, assay = assay)
-        gg <- ggplot(ggData, aes_string("x", "y"))
+        ggData <- ggfy(eset, pheno = c(x, group), assay = assay)
+        gg <- ggplot(ggData, aes_string(x, assay))
         if (!is.null(group)){
             gg <- gg +
                 geom_smooth(
-                    aes_string(fill = "group", colour = "group"),
+                    aes_string(fill = group, colour = group),
                     alpha = alpha,
                     ...
-                ) +
-                labs(group = group)
+                )
         } else {
             gg <- gg + geom_smooth(...)
         }
-        gg <- gg + labs(y = assay, x = x)
-        if (length(feature) == 1){
+        if (nrow(eset) == 1){
             # TODO: subtitle,
-            gg <- gg + labs(title = feature)
+            gg <- gg + labs(title = featureNames(eset))
         } else {
             # TODO: allow choice between facet_[wrap|grid]
             gg <- gg + facet_wrap(~ feature, scales = scales)

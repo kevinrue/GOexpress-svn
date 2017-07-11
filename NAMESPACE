@@ -45,8 +45,9 @@ export("head")
 export("tail")
 export("GOMap")
 export("GOrank")
-export("ggFeature")
-export("smoothExpression")
+export("ggfy")
+export("ggPheno")
+export("smoothFeature")
 
 # GOexpress"1"
 # Defunct in future versions

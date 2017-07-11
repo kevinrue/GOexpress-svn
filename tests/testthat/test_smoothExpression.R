@@ -10,15 +10,46 @@ eset <- ExpressionSet(
 
 eset$Time <- factor(eset$Time, c("2H", "6H", "24H", "48H"))
 
-# ggGene ----
+fData(eset)[,"dummy"] <- as.factor(
+    sample(LETTERS, size = nrow(eset), replace = TRUE))
 
-test_that("smoothExpression works",{
+# ggfy -----
+
+test_that("ggPheno works",{
+
+    expect_s3_class(
+        ggfy(
+            eset[1:2,],
+            pheno = c("Time", "Infection"),
+            feature = c("dummy")
+        ),
+        "data.frame"
+    )
+
+    expect_s3_class(
+        ggplot(ggfy(
+            eset[1:2,],
+            pheno = c("Timepoint", "Infection", "Animal"),
+            feature = c("dummy")
+        )) +
+            geom_line(
+                aes(Timepoint, exprs, colour = Infection, group = Infection),
+                alpha = 0.5
+            ) +
+            facet_grid(feature ~ Animal),
+        "ggplot"
+    )
+
+})
+
+# ggPheno ----
+
+test_that("ggPheno works",{
 
     # One gene, all aesthetic, keep.names
     expect_s3_class(
-        ggFeature(
-            eset,
-            feature = head(featureNames(eset), 1), assay = "exprs",
+        ggPheno(
+            eset[1,], assay = "exprs",
             x = "Time", group = "Infection", colour = "Animal",
             shape = "Timepoint", fill = "Group", facet = "Animal"
         ),
@@ -27,27 +58,24 @@ test_that("smoothExpression works",{
 
     # One gene, no aesthetic
     expect_s3_class(
-        ggFeature(
-            eset,
-            feature = head(featureNames(eset), 1), assay = "exprs"
+        ggPheno(
+            eset[1,], assay = "exprs"
         ),
         "data.frame"
     )
 
     # Multiple genes, no aesthetic
     expect_s3_class(
-        ggFeature(
-            eset, assay = "exprs",
-            feature = head(featureNames(eset), 2)
+        ggPheno(
+            eset[1:2,], assay = "exprs"
         ),
         "data.frame"
     )
 
     # One gene, all aesthetic, do not keep.names
     expect_s3_class(
-        ggFeature(
-            eset,
-            feature = head(featureNames(eset), 1), assay = "exprs",
+        ggPheno(
+            eset[1,], assay = "exprs",
             x = "Time", group = "Infection", colour = "Animal",
             shape = "Timepoint", fill = "Group", facet = "Animal"
         ),
@@ -56,15 +84,14 @@ test_that("smoothExpression works",{
 
 })
 
-# smoothExpression ----
+# smoothFeature ----
 
-test_that("smoothExpression works",{
+test_that("smoothFeature works",{
 
     # One feature - no grouping
     expect_s3_class(
-        smoothExpression(
-            eset,
-            feature = head(featureNames(eset), 1),
+        smoothFeature(
+            eset[1,],
             x = "Timepoint"
         ),
         "ggplot"
@@ -72,9 +99,8 @@ test_that("smoothExpression works",{
 
     # One feature - grouping
     expect_s3_class(
-        smoothExpression(
-            eset,
-            feature = head(featureNames(eset), 1),
+        smoothFeature(
+            eset[1,],
             x = "Timepoint",
             group = "Infection"
         ),
@@ -84,9 +110,8 @@ test_that("smoothExpression works",{
 
     # Multiple features + extra geom_point layer
     expect_s3_class(
-        smoothExpression(
-            eset,
-            feature = head(featureNames(eset), 2),
+        smoothFeature(
+            eset[1:2,],
             x = "Timepoint", group = "Infection",
             nrow = 1, scales = "free_y"
         ) +
@@ -100,9 +125,8 @@ test_that("smoothExpression works",{
 
     # Extra aesthetic, available for extra layers
     expect_s3_class(
-        smoothExpression(
-            eset,
-            feature = head(featureNames(eset), 1),
+        smoothFeature(
+            eset[1,],
             x = "Timepoint",
             group = "Infection",
             facet = "Treatment"

@@ -1,20 +1,21 @@
-\name{ggFeature}
+\name{ggPheno}
 
-\alias{ggFeature}
-\alias{ggFeature,ExpressionSet-method}
+\alias{ggPheno}
+\alias{ggPheno,ExpressionSet-method}
 
 \title{
 Prepare a ggplot-able \code{data.frame} from expression data
 }
 
 \description{
-Assemble expression level, feature and samples identifiers in a
-\code{data.frame} ready for use by \code{ggplot} functions.
+Assemble expression level, feature and samples identifiers,
+along with \code{phenoData} information from an \code{ExpressionSet}
+as a \code{data.frame} ready for use by \code{ggplot} functions.
 }
 
 \usage{
-    \S4method{ggFeature}{ExpressionSet}(
-        eset, feature,
+    \S4method{ggPheno}{ExpressionSet}(
+        eset,
         x = NULL, assay = "exprs", group = NULL,
         colour = NULL, shape = NULL, fill = NULL, facet = NULL
     )
@@ -23,17 +24,6 @@ Assemble expression level, feature and samples identifiers in a
 \arguments{
     \item{eset}{
     An \code{\linkS4class{ExpressionSet}}.
-    }
-    \item{feature}{
-    A \code{character} vector of feature identifiers present in
-    \code{featureNames(eset)}.
-
-    Multiple features can be given (\emph{e.g.}, for later faceting).
-    In that case, the \code{assay} matrix is
-    \code{\link[reshape2:melt]{melted}} and stored in columns
-    \code{feature}, \code{sample}, and \code{y}
-    of the output \code{data.frame}.
-    See \code{assay} below for more information.
     }
     \item{x}{
     Name of a column in \code{pData(eset)}.
@@ -98,31 +88,25 @@ eset <- ExpressionSet(
 
 # Example ----
 
-geneId <- head(featureNames(eset), 1)
-geneIds <- head(featureNames(eset), 2)
+# First feature
+gg.df <- ggPheno(eset[1,])
 
-gg.df <- ggFeature(eset, feature = geneId)
-
-gg.df <- ggFeature(
-    subset(eset, Time == "2H" & Infection == "CN"),
-    feature = geneIds,
-    x = "Time", colour = "Infection"
+# First two features, in a subset of samples
+gg.df <- ggPheno(
+    subset(eset[1:2,], Time == "2H" & Infection == "CN"),
+    x = "Time",
+    colour = "Infection"
 )
 
 require(ggplot2)
 ggplot(
-    ggFeature(
-        eset, geneIds,
+    ggPheno(
+        eset[1:2,],
         x = "Timepoint",
         facet = "Infection"
     )
-) + facet_grid(feature ~ facet, scales = "free_y") +
-    geom_smooth(aes(x, y, fill = facet, colour = facet)) +
-    labs(
-        x = "Timepoint",
-        y = "exprs",
-        fill = "Infection", colour = "Infection"
-    ) +
+) + facet_grid(feature ~ Infection, scales = "free_y") +
+    geom_smooth(aes(Timepoint, exprs, fill = Infection, colour = Infection)) +
     theme_bw()
 }
 

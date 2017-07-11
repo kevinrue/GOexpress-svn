@@ -1,7 +1,7 @@
-\name{smoothExpression}
+\name{smoothFeature}
 
-\alias{smoothExpression}
-\alias{smoothExpression,ExpressionSet,character-method}
+\alias{smoothFeature}
+\alias{smoothFeature,ExpressionSet-method}
 
 \title{
 \code{geom_smooth} layer of expression data
@@ -15,8 +15,8 @@ with additional layers and \code{\link[ggplot2:theme]{theme}} elements.
 }
 
 \usage{
-    \S4method{smoothExpression}{ExpressionSet,character}(
-        eset, feature, x, group = NULL, ...,
+    \S4method{smoothFeature}{ExpressionSet}(
+        eset, x, group = NULL, ...,
         assay = "exprs", alpha = GeomSmooth$default_aes$alpha,
         scales = "fixed"
     )
@@ -25,17 +25,6 @@ with additional layers and \code{\link[ggplot2:theme]{theme}} elements.
 \arguments{
     \item{eset}{
         An \code{\linkS4class{ExpressionSet}}.
-    }
-    \item{feature}{
-        A \code{character} vector of feature identifiers present in
-        \code{featureNames(eset)}.
-
-        Multiple features can be given (\emph{e.g.}, for later faceting).
-        In that case, the \code{assay} matrix is
-        \code{\link[reshape2:melt]{melted}} and stored in columns
-        \code{feature}, \code{sample}, and \code{y}
-        of the output \code{data.frame}.
-        See \code{assay} below for more information.
     }
     \item{x}{
         Name of a column in \code{pData(eset)}.
@@ -79,13 +68,13 @@ A \code{ggplot} object.
 
 \seealso{
     \code{\link[ggplot2:ggplot]{ggplot}},
-    \code{\link{ggFeature}}.
+    \code{\link{ggPheno}}.
 }
 
 \details{
 If multiple feature identifiers are requested, they are displayed as
 \code{\link[ggplot2:facet_wrap]{facet_wrap}}.
-See \code{\link{ggFeature}} for examples to display them
+See \code{\link{ggPheno}} for examples to display them
 as \code{\link[ggplot2:facet_grid]{facet_grid}}.
 }
 
@@ -103,27 +92,24 @@ eset <- ExpressionSet(
 
 # Example ----
 
-geneId <- head(featureNames(eset), 1)
-geneIds <- head(featureNames(eset), 2)
-
 require(ggplot2)
-smoothExpression(
-    eset, geneId,
+smoothFeature(
+    eset[1,],
     x = "Timepoint", group = "Infection",
     level = 0.5 # geom_smooth(level = ...)
 ) + theme_minimal()
 
-smoothExpression(
-    eset, geneIds,
-    x = "Timepoint", group = "Infection"
+smoothFeature(
+    eset[1:2,],
+    x = "Timepoint", group = "Infection", alpha = 0.3
 )
 
-smoothExpression(
-    eset, geneIds,
+smoothFeature(
+    eset[1:2,],
     x = "Timepoint", group = "Infection",
     nrow = 1, scales = "free_y", alpha = 0.2
 ) + geom_point(
-        aes(x, y, colour = group),
+        aes(Timepoint, exprs, colour = Infection),
         position = position_dodge(width = 2)
     ) +
     theme_bw()
