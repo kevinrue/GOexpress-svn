@@ -48,7 +48,8 @@ The output of the \link[randomForest:randomForest]{randomForest} method.
 }
 
 \seealso{
-    \code{\link[randomForest:randomForest]{randomForest}}.
+    \code{\link[randomForest:randomForest]{randomForest}},
+    \code{\link[randomForest:importance]{importance}}.
 }
 
 \examples{

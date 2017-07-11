@@ -252,7 +252,7 @@ rf <- randomForest(Bt.eset, 'Infection')
 Here, we demonstrate how the average rank of features annotated to each
 category can be calculated:
 
-```{r}
+```{r GOrank}
 data("Bt.GOMap")
 gr <- GOrank(rf, Bt.GOMap)
 gr
@@ -273,6 +273,7 @@ plot(rf)
 ```
 
 # Advanced use
+
 ## Subsetting ExpressionSet objects
 
 `r Biocpkg("GOexpress")` implements a `subset` S4 method for `ExpressionSet`
@@ -284,6 +285,90 @@ fData(Bt.eset)[,'dummy'] <- sample(LETTERS, nrow(Bt.eset), TRUE)
 Bt.sub <- subset(Bt.eset, pheno = (Timepoint == '2H'), feature = (dummy < 'N'))
 dim(Bt.eset); dim(Bt.sub)
 ```
+
+**Note:**
+The `subset` method returns an `ExpressionSet` object that can be directly
+passed to an analysic or plotting method.
+
+# Visualisation
+
+`r Biocpkg("GOexpress")` implements several methods to visualise and share
+expression profiles of interest. In versions **>=2.x.x**, `ggplot2` was
+established as the primary plotting system for `r Biocpkg("GOexpress")`.
+
+```{r ggplot2}
+require(ggplot2)
+```
+
+For this purpose, let us identify:
+
+* the most important feature identified by the `randomForest` method:
+
+```{r bestFeature.rf}
+bestFeature.rf <- head(rownames(
+    randomForest::importance(rf)[order(
+        randomForest::importance(rf)[,"MeanDecreaseGini"],
+        decreasing = TRUE),
+    ]), 1)
+```
+
+* the least important feature identified by the `randomForest` method:
+
+```{r worstFeature.rf}
+worstFeature.rf <- tail(rownames(
+    randomForest::importance(rf)[order(
+        randomForest::importance(rf)[,"MeanDecreaseGini"],
+        decreasing = TRUE),
+    ]), 1)
+```
+
+## Smoothed feature profile
+
+We may plot the smoothed expression profile of the most important feature,
+indicating each `Infection` group by a different colour:
+
+```{r smoothFeature_feature}
+smoothFeature(Bt.eset[bestFeature.rf,], x = "Time", group = "Infection")
+```
+
+It is possible to visualised simultaneously multiple features;
+in that case, the `smoothFeature` creates a new facet for each feature:
+
+```{r smoothFeature_features}
+smoothFeature(
+    Bt.eset[c(bestFeature.rf, worstFeature.rf),],
+    x = "Time", group = "Infection"
+) +
+    theme_bw() +
+    labs(
+        y = "Expression",
+        title = "Most and least important features identified by randomForest"
+    )
+```
+
+**Note:**
+The `smoothFeature` method returns an `ggplot` object that can be further
+configured (*e.g.*, `theme`, `labs`), as shown above.
+
+## Combine assay, feature, and phenotype data for complete freedom
+
+The `ggfy` method combines expression data for any number of features
+with fields from the `phenoData` and `featureData` slots
+in a `data.frame` ready for use by `r CRANpkg("ggplot2")` methods:
+
+```{r}
+ggplot(ggfy(
+    Bt.eset[c(bestFeature.rf, worstFeature.rf),],
+    pheno = c("Animal", "Time", "Infection"),
+    feature = c("dummy"),
+    assay = "exprs"
+)) +
+    facet_grid(feature ~ Animal) +
+    geom_line(aes(Time, exprs, colour = Infection)) +
+    scale_y_continuous(limits = range(exprs(Bt.eset))) +
+    theme_bw()
+```
+
 
 # Notes
 
