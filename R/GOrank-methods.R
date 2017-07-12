@@ -54,7 +54,7 @@ setMethod(
         y = fdata[,'rank', drop = FALSE],
         by.x = "feature", by.y = "row.names", all.x = TRUE
     )
-    # goRank <- with(resTable, tapply(rank, go, 'mean'))
+    # TODO: allow custom function to summarise ranks
     goRank <- tapply(resTable[,'rank'], resTable[,'go'], 'mean')
     # Count total annotated features by GO term
     # totalFeatures <- with(resTable, tapply(feature, go, 'length'))
