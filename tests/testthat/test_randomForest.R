@@ -5,9 +5,17 @@ Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 
 rf <- randomForest(Bt.eset, "Infection")
 
-test_that("simple usage",{
+test_that("randomForest works",{
 
     expect_s3_class(rf, "randomForest")
+
+})
+
+# topFeeatures(multiHtest) ----
+
+test_that("topFeatures works on multiHtest objects",{
+
+    expect_s3_class(topFeatures(rf), "data.frame")
 
 })
 

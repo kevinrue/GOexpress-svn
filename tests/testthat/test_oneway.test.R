@@ -35,6 +35,14 @@ test_that("tail works on multiHtest objects",{
 
 })
 
+# topFeeatures(multiHtest) ----
+
+test_that("topFeatures works on multiHtest objects",{
+
+    expect_s3_class(topFeatures(ow), "data.frame")
+
+})
+
 # p.adjust ----
 
 pa <- p.adjust(ow)

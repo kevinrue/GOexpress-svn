@@ -5,7 +5,7 @@ setMethod(
     function(x, n = 6L, value = "MeanDecreaseGini"){
         ii <- importance(x)
         oo <- order(ii[, value], decreasing = TRUE)
-        return(head(ii[oo,], n))
+        return(as.data.frame(head(ii[oo,], n)))
     }
 )
 

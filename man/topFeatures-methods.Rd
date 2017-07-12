@@ -9,8 +9,9 @@ Extract the most interesting features for supervised classification
 }
 
 \description{
-For \code{randomForest}, returns the \code{importance} matrix ordered
-by any one column in decreasing order (default: \code{"MeanDecreaseGini"}).
+For \code{randomForest}, returns the \code{importance} matrix, retyped
+as a \code{data.frame}, and ordered by any one column in decreasing order
+(default: \code{"MeanDecreaseGini"}).
 
 For \code{randomForest}, returns the \code{importance} matrix ordered
 by the \code{"statistic"} column in decreasing order.
@@ -40,7 +41,8 @@ by the \code{"statistic"} column in decreasing order.
 
 \value{
 For \code{\link[randomForest:randomForest]{randomForest}} objects,
-the \code{importance} matrix, ordered by the selected decreasing value
+the \code{importance} matrix, retyped as a \code{data.frame},
+and ordered by the selected decreasing value
 (default: \code{"MeanDecreaseGini"}).
 
 For \code{\link{multiHtest}} objects,
