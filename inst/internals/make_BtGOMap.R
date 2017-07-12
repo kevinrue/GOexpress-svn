@@ -14,8 +14,9 @@ colnames(bm)
 bm.sub <- subset(bm, ensembl_gene_id != '' & go_id != '')
 dim(bm.sub)
 
+# Keep only annotations for features in demo data set (no!)
 # Requires makeAlvMac.R script run first
-bm.sub <- subset(bm.sub, feature %in% rownames(Bt.logCPM))
+# bm.sub <- subset(bm.sub, feature %in% rownames(Bt.logCPM))
 
 bm.source <- c(
     'biomaRt',
@@ -28,3 +29,5 @@ bm.source <- c(
 Bt.GOMap <- GOMap(bm.sub, bm.source)
 
 save(Bt.GOMap, file = 'data/Bt.GOMap.rda')
+
+tools::resaveRdaFiles('data/Bt.GOMap.rda')
