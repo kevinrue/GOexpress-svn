@@ -79,6 +79,11 @@ setMethod(
     # Order tables by (average) rank
     fdata <- fdata[order(fdata[,'rank']),]
     goTable <- goTable[order(goTable[,'rank']),]
+    # Re-type rank as integer
+    storage.mode(fdata$rank) <- "integer"
+    storage.mode(goTable$rank) <- "integer"
+    storage.mode(goTable$d) <- "integer"
+    # Return the output object
     gor <- GOSummarisedRank(
         godata = goTable,
         metric = rep(NA_character_, 2),
