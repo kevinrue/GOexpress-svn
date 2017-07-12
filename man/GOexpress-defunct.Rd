@@ -28,8 +28,8 @@
 
 \details{
 
-    The following functions are defunct; use the replacement indicated below,
-    where applicable:
+    The following functions are defunct;
+    please use the replacement indicated below, where applicable:
     \itemize{
 
         \item{\code{GO_analyse}:
@@ -39,9 +39,14 @@
 
         \item{\code{cluster_GO}: No replacement yet}
 
-        \item{\code{expression_plot}: No replacement yet}
+        \item{\code{expression_plot}:
+        Replaced by \code{\link[GOexpress:smoothFeature]{smoothFeature}}.
+        }
 
-        \item{\code{expression_plot_symbol}: No replacement yet}
+        \item{\code{expression_plot_symbol}:
+        Please use
+        \code{\link[GOexpress:smoothFeature]{smoothFeature}}.
+        }
 
         \item{\code{expression_profiles}: No replacement yet}
 
@@ -61,7 +66,9 @@
 
         \item{\code{rerank}: No replacement yet}
 
-        \item{\code{subEset}: No replacement yet}
+        \item{\code{subEset}:
+        \code{\link[GOexpress:subset]{subset}}
+        }
 
         \item{\code{subset_scores}: No replacement yet}
 
