@@ -28,6 +28,17 @@ The package requires three types of inputs:
 * A `data.frame` of phenotype information
 * A `data.frame` of two columns that provides a bidirectional mapping
     between features and categories
+    
+The first two (expression and phenotype)
+are expected in any object that inherits from
+the `ExpressionSet` class
+([Biobase](https://bioconductor.org/packages/Biobase) package).
+
+The latter must be supplied as a `GOMap`, a class
+implemented in `GOexpress` to store mapping between
+feature identifiers (*e.g.*, Ensembl gene ID), and categories
+(*e.g.*, Gene Ontology) as a simple `data.frame`.
+
 
 ## Analysis
 
@@ -48,5 +59,8 @@ at each step of the analysis.
 In particular:
 
 * Comparative expression profile of features between phenotype levels
+  (`smoothFeature`, `ggfy`)
 * Heat map summary view of expression in annotated GO categories
+  (*coming back soon*)
 * Hierarchical clustering of samples using annotated GO categories
+  (*coming back soon*)
