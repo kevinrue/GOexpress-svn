@@ -74,3 +74,35 @@ test_that("show works on GOSummarisedRank objects",{
     expect_type(show(gr), "NULL")
 
 })
+
+# GOBootstrapRank ----
+
+t2 <- gr@table
+t2[,"P"] <- runif(nrow(t2), 0, 1)
+
+gbr <- GOBootstrapRank(
+    table = t2,
+    metric = gr@metric,
+    GOMap = gr@GOMap,
+    featureData = gr@featureData,
+    pFactor = gr@pFactor,
+    n.bootstrap = 10
+)
+
+test_that("bootstrap.p.value works on multiHtest objects",{
+
+    expect_s4_class(gbr,"GOBootstrapRank")
+    expect_equal(gbr@pFactor, "Infection")
+    expect_equal(gbr@metric, c("statistic", "multiHtest"))
+    expect_true(all(gbr@table$n >= gr@table$d))
+    expect_true(all(gbr@table$P <= 1))
+    expect_true(all(gbr@table$P >= 0))
+    expect_true(all(gbr@n.bootstrap > 0))
+
+})
+
+test_that("show works on GOSummarisedRank objects",{
+
+    expect_type(show(gbr), "NULL")
+
+})

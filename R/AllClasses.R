@@ -123,4 +123,46 @@ GOSummarisedRank <- setClass(
 
     validity = .valid.GOSummarisedRank
 )
+
+# GOBootstrapRank ----
+
+.valid.GOBootstrapRank <- function(object){
+    errors <- c()
+
+    if (any(colnames(object@table) != c('rank','n','d','P'))){
+        msg <- 'Invalid colnames(object@table)'
+        errors <- c(errors, msg)
+    }
+
+    if (length(object@n.bootstrap) != 1){
+        msg <- sprintf(
+            "object@n.bootstrap must be a character vector of length 1: %i",
+            length(object@n.bootstrap)
+        )
+        errors <- c(errors, msg)
+    }
+
+    if (length(errors > 0)){
+        return(errors)
+    }
+
+    return (TRUE)
+}
+
+GOBootstrapRank <- setClass(
+    "GOBootstrapRank",
+    # contains = "GOSummarisedRank", # invalid @table for that 'parent' class
+
+    slots = list(
+        table = 'data.frame',
+        metric = 'character',
+        # FUN = 'function',
+        GOMap = 'GOMap',
+        featureData = 'data.frame',
+        pFactor = 'character',
+        n.bootstrap = 'numeric'
+    ),
+
+    validity = .valid.GOBootstrapRank
+)
 # nocov end

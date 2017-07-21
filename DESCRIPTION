@@ -28,10 +28,11 @@ Description: The package contains methods to visualise the expression profile
 Depends: R (>= 3.4), Biobase (>= 2.22.0), methods
 Imports: randomForest (>= 4.6), broom (>= 0.4.2), stats,
     RColorBrewer, gplots, ggplot2, reshape2
-Suggests: BiocStyle, knitr, rmarkdown, testthat
+Suggests: BiocStyle, knitr, rmarkdown, testthat, biomaRt
 License: GPL (>= 3)
 Collate: AllClasses.R AllGenerics.R
     GOMap-class.R GOSummarisedRank-class.R
+    bootstrap.p.value.R
     ggfy-methods.R GOrank-methods.R head-methods.R listMethods.R
     oneway.test-methods.R p.adjust-methods.R randomForest-methods.R
     show-methods.R smoothFeature-methods.R subset-methods.R tail-methods.R

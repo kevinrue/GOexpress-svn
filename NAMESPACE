@@ -44,10 +44,12 @@ export("listMethods")
 export("head")
 export("tail")
 export("GOMap")
+export("GOMap.biomart")
 export("GOrank")
 export("ggfy")
 export("smoothFeature")
 export("topFeatures")
+export("bootstrap.p.value")
 
 # GOexpress"1"
 # Defunct in future versions

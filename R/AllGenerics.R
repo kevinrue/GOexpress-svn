@@ -26,6 +26,15 @@ setGeneric(
         standardGeneric("GOrank")
 )
 
+# nocov start
+setGeneric(
+    "bootstrap.p.value",
+    signature = c("x"),
+    function(x, n = 1E3, ...)
+        standardGeneric("bootstrap.p.value")
+)
+# nocov end
+
 setGeneric(
     "ggfy",
     signature = c("eset"),

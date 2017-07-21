@@ -50,3 +50,23 @@ setMethod(
         return(NULL)
     }
 )
+
+# GOBootstrapRank ----
+
+# FYI: same as GOSummarisedRank
+setMethod(
+    "show", "GOBootstrapRank",
+    function(object){
+        cat("Class: GOBootstrapRank\n")
+        cat("@table:\n")
+        print(head(object@table))
+        if (nrow(object@table) > 6)
+            cat(sprintf("%i more rows...\n", nrow(object@table) - 6))
+        cat("\n")
+        om <- object@metric
+        cat(sprintf("@metric: %s [%s]\n", om[1], om[2]))
+        cat(sprintf("@pFactor: %s\n", object@pFactor))
+        cat("Other slots: @featureData, @GOMap, @n.bootstrap")
+        return(NULL)
+    }
+)

@@ -13,6 +13,7 @@
 % Accessor methods:
 
 % Other methods / functions
+\alias{GOMap.biomart}
 \alias{nrow,GOMap-method}
 
 \title{GOMap class objects}
@@ -20,10 +21,18 @@
 \description{
 The \code{GOMap} class stores mapping between Gene Ontology categories
 and arbitrary features (\emph{e.g.}, genes, proteins).
+
+The \code{GOMap.biomart} function builds a \code{GOMap} object from
+the Ensembl BioMart.
 }
 
 \usage{
 GOMap(table, source = NA_character_)
+
+GOMap.biomart(
+    dataset, feature = "ensembl_gene_id", ..., go = "go_id",
+    host = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL"
+)
 }
 
 \section{Accessor methods}{
@@ -53,6 +62,28 @@ In the following code snippets \code{x} is a \code{GOMap} object.
     \code{c("biomaRt", "hsapiens_gene_ensembl", "feb2014.archive.ensembl.org")}
     ).
     }
+    \item{dataset}{
+    Dataset of the Ensembl Biomart to access.
+    See \link[biomaRt:useMart]{useMart}
+    }
+    \item{feature}{
+    Feature identifier to retrieve. See \link[biomaRt:getBM]{getBM}
+    }
+    \item{\dots}{
+    Additional arguments passed to \code{useMart}.
+    }
+    \item{go}{
+    Gene Ontology category identifier to retrieve.
+    See \link[biomaRt:getBM]{getBM}
+    }
+    \item{host}{
+    Ensembl BioMart host to connect to.
+    See \link[biomaRt:useMart]{useMart}
+    }
+    \item{biomart}{
+    Ensembl BioMart database to connect to.
+    See \link[biomaRt:useMart]{useMart}
+    }
 }
 
 \value{
@@ -65,7 +96,8 @@ Kevin Rue-Albrecht
 }
 
 \seealso{
-\code{\link[biomaRt:getBM]{getBM}}.
+\code{\link[biomaRt:getBM]{getBM}},
+\code{\link[biomaRt:useMart]{useMart}}.
 }
 
 \examples{
@@ -74,6 +106,10 @@ Kevin Rue-Albrecht
 df <- data.frame(paste0("GO:000", 1:9), sample(LETTERS[1:2], 9, TRUE))
 
 gm <- GOMap(df, "dummy")
+
+\dontrun{
+GOMap.biomart("btaurus_gene_ensembl", host = "feb2014.archive.ensembl.org")
+}
 
 # Accessors ----
 
