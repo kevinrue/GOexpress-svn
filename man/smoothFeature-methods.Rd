@@ -92,21 +92,21 @@ Bt.eset <- ExpressionSet(Bt.logCPM, AnnotatedDataFrame(Bt.pheno))
 require(ggplot2)
 smoothFeature(
     Bt.eset[1,],
-    x = "Timepoint", group = "Infection",
-    level = 0.5 # geom_smooth(level = ...)
+    x = "Time", group = "Infection",
+    level = 0.5
 ) + theme_minimal()
 
 smoothFeature(
     Bt.eset[1:2,],
-    x = "Timepoint", group = "Infection", alpha = 0.3
+    x = "Time", group = "Infection", alpha = 0.3
 )
 
 smoothFeature(
     Bt.eset[1:2,],
-    x = "Timepoint", group = "Infection",
+    x = "Time", group = "Infection",
     nrow = 1, scales = "free_y", alpha = 0.2
 ) + geom_point(
-        aes(Timepoint, exprs, colour = Infection),
+        aes(Time, exprs, colour = Infection),
         position = position_dodge(width = 2)
     ) +
     theme_bw()
