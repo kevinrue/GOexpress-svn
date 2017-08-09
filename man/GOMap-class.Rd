@@ -15,6 +15,7 @@
 % Other methods / functions
 \alias{GOMap.biomart}
 \alias{nrow,GOMap-method}
+\alias{subset,GOMap-method}
 
 \title{GOMap class objects}
 
@@ -28,6 +29,8 @@ the Ensembl BioMart.
 
 \usage{
 GOMap(table, source = NA_character_)
+
+\S4method{subset}{GOMap}(x, pheno, feature, ...)
 
 GOMap.biomart(
     dataset, feature = "ensembl_gene_id", ..., go = "go_id",
@@ -44,6 +47,17 @@ In the following code snippets \code{x} is a \code{GOMap} object.
     }
     \item{\code{nrow(x)}}{
     Number of annotations between Gene Ontology categories and features.
+    }
+}
+}
+
+\section{Subsetting}{
+In the following code snippets \code{x} is a \code{GOMap} object.
+\describe{
+    \item{\code{subset(x, go, feature)}}{
+    Create a subset of \code{x} for records that refer to specific
+    GO categories \strong{and} features
+    (typically, only one argument would be used).
     }
 }
 }
@@ -73,7 +87,7 @@ In the following code snippets \code{x} is a \code{GOMap} object.
     Additional arguments passed to \code{useMart}.
     }
     \item{go}{
-    Gene Ontology category identifier to retrieve.
+    Name of the GO category field to retrieve from the Ensembl BioMart.
     See \link[biomaRt:getBM]{getBM}
     }
     \item{host}{
@@ -114,6 +128,10 @@ GOMap.biomart("btaurus_gene_ensembl", host = "feb2014.archive.ensembl.org")
 # Accessors ----
 
 nrow(gm)
+
+# Subsetting ----
+
+subset(gm, go = c("GO:0001", "GO:0002"))
 }
 
 \keyword{ GOexpress }

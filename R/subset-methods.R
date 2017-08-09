@@ -1,5 +1,5 @@
 
-# multiHtest ----
+# subset : ExpressionSet ----
 
 setMethod(
     "subset", "ExpressionSet", function(x, pheno, feature, ...){
@@ -24,5 +24,23 @@ setMethod(
 
         newX <- x[keepFeatures, keepSamples]
         return(newX)
+    }
+)
+
+# subset : GOMap ----
+
+setMethod(
+    "subset",
+    signature = "GOMap",
+    function(x, go = NULL, feature = NULL){
+        subTable <- x@table
+        if (!is.null(go)){
+            subTable <- subTable[subTable[,"go"] %in% go,]
+        }
+        if (!is.null(feature)){
+            subTable <- subTable[subTable[,"feature"] %in% feature,]
+        }
+        x@table <- subTable
+        return(x)
     }
 )
