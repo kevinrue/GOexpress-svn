@@ -15,6 +15,7 @@ setMethod(
 .randomForest <- function(x, pheno, ..., do.trace = 100){
     stopifnot(nrow(x) >= 4)
     stopifnot(is.factor(pheno))
+    stopifnot(requireNamespace("randomForest"))
 
     tablePheno <- table(pheno)
     stopifnot(all(tablePheno != 0))
