@@ -30,8 +30,6 @@ the Ensembl BioMart.
 \usage{
 GOMap(table, source = NA_character_)
 
-\S4method{subset}{GOMap}(x, pheno, feature, ...)
-
 GOMap.biomart(
     dataset, feature = "ensembl_gene_id", ..., go = "go_id",
     host = "www.ensembl.org", biomart = "ENSEMBL_MART_ENSEMBL"
@@ -54,10 +52,14 @@ In the following code snippets \code{x} is a \code{GOMap} object.
 \section{Subsetting}{
 In the following code snippets \code{x} is a \code{GOMap} object.
 \describe{
-    \item{\code{subset(x, go, feature)}}{
-    Create a subset of \code{x} for records that refer to specific
-    GO categories \strong{and} features
-    (typically, only one argument would be used).
+    \item{}{
+    \code{subset(x, go, feature)}:
+    Return a new \code{GOMap} object using:
+    \describe{
+        \item{go}{character vector of category identifier(s)}
+        \item{feature}{character vector of feature identifier(s)}
+      }
+    Typically, only one of \code{go} or \code{feature} would be used.
     }
 }
 }
